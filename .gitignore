@@ -1,0 +1,40 @@
+# Python (Django)
+*.pyc
+__pycache__/
+.venv/
+venv/
+*.sqlite3
+*.sqlite3-journal
+*.log
+local_settings.py
+.env
+media/ # if you have media files being uploaded.
+static/ # if you have static files being generated.
+silk.db # Silk database file
+migrations/ # consider ignoring migrations if you don't want them in version control.
+
+# Node.js (React)
+node_modules/
+build/
+package-lock.json
+yarn-error.log
+
+# OS Specific
+.DS_Store
+Thumbs.db
+
+# IDE Specific
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# drf_spectacular
+schema.yml # if you generate a schema file
+
+# Silk
+silk.profdata
+silk.sqlite
+
+# Misc
+*.dump
