@@ -37,7 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Local Apps
+    "apps.address",
+    "apps.cart",
+    "apps.category",
+    "apps.order",
+    "apps.payment",
+    "apps.products",
+    "apps.review",
+    "apps.user",
+    "apps.wishlist",
 ]
+
+AUTH_USER_MODEL = "user.CustomUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
