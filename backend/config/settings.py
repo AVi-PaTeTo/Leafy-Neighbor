@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     "apps.review",
     "apps.user",
     "apps.wishlist",
+
+    "rest_framework"
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"
