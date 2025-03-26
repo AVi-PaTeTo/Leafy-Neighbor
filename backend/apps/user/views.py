@@ -6,6 +6,6 @@ from rest_framework import viewsets
 
 User = get_user_model()
 
-class UserApiView(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
