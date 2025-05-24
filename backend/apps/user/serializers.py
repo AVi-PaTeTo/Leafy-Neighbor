@@ -1,10 +1,14 @@
 from rest_framework import serializers
-from .models import CustomUser
-from django.contrib.auth import get_user_model
+from .models import User, VendorProfile
 
-User = get_user_model()
+class VendorProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VendorProfile
+        fields = ["id", "business_name", "created_at"]
 
 class UserSerializer(serializers.ModelSerializer):
+    vendor_profile = VendorProfileSerializer(read_only=True)
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email','phone_number','is_vendor']
+        fields = ["id", "email", "username", "phone_number", "is_vendor", "vendor_profile"]
