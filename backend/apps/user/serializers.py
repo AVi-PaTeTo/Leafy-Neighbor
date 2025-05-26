@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, VendorProfile
+from .models import CustomUser, VendorProfile
 
 class VendorProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -10,5 +10,5 @@ class UserSerializer(serializers.ModelSerializer):
     vendor_profile = VendorProfileSerializer(read_only=True)
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ["id", "email", "username", "phone_number", "is_vendor", "vendor_profile"]

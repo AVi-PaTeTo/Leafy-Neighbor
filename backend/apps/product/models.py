@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-# Create your models here.
+from apps.category.models import Category, Tag
 
 User = get_user_model()
 
@@ -9,3 +9,12 @@ class Product(models.Model):
     description = models.TextField()
     stock = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
+
+    categories = models.ManyToManyField(Category, related_name="products")
+    tags = models.ManyToManyField(Tag, related_name="products")
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_modified =  models.DateTimeField(auto_now=True)
+
+    
+    def __str__(self):
+        return self.title
