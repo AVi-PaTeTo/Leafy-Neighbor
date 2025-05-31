@@ -6,6 +6,7 @@ from apps.address.views import AddressViewSet
 from apps.category.views import CategoryViewSet, TagViewSet
 from apps.review.views import ReviewViewSet
 from apps.wishlist.views import WishlistViewSet, WishlistItemViewSet
+from apps.cart.views import CartViewSet, CartItemViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -17,6 +18,8 @@ router.register(r'tags', TagViewSet, basename='tags')
 router.register(r'reviews', ReviewViewSet, basename='reviews')
 router.register(r'wishlists', WishlistViewSet, basename='wishlist')
 router.register(r'wishlist-items', WishlistItemViewSet, basename='wishlistitem')
+router.register(r'carts', CartViewSet, basename='cart')
+router.register(r'cart-items', CartItemViewSet, basename='cartitem')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
