@@ -7,6 +7,9 @@ from apps.category.views import CategoryViewSet, TagViewSet
 from apps.review.views import ReviewViewSet
 from apps.wishlist.views import WishlistViewSet, WishlistItemViewSet
 from apps.cart.views import CartViewSet, CartItemViewSet
+from apps.order.views import OrderViewSet, OrderItemViewSet
+from apps.payment.views import PaymentViewSet
+
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -20,6 +23,9 @@ router.register(r'wishlists', WishlistViewSet, basename='wishlist')
 router.register(r'wishlist-items', WishlistItemViewSet, basename='wishlistitem')
 router.register(r'carts', CartViewSet, basename='cart')
 router.register(r'cart-items', CartItemViewSet, basename='cartitem')
+router.register(r'orders', OrderViewSet, basename='order')
+router.register(r'order-items', OrderItemViewSet, basename='orderitem')
+router.register(r'payments', PaymentViewSet, basename='payment')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

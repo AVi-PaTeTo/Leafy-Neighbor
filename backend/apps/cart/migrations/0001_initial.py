@@ -12,17 +12,18 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name='Cart',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True)),
+                ('last_updated', models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Tag',
+            name='CartItem',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True)),
+                ('quantity', models.PositiveSmallIntegerField()),
+                ('added_on', models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]
