@@ -4,6 +4,7 @@ from apps.category.serializers import TagSerializer, CategorySerializer
 from apps.category.models import Tag, Category
 
 class ProductSerializer(serializers.ModelSerializer):
+    vendor = serializers.ReadOnlyField(source="vendor.business_name")
     categories = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(),
         many=True,
@@ -19,5 +20,5 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'description', 'stock', 'price', 'categories', 'tags',  'created_at', 'last_modified']
-        read_only_fields = ['id', 'created_at', 'last_modified', 'categories_detail', 'tags_detail']
+        fields = ['id', 'vendor', 'title', 'description', 'stock', 'price', 'categories', 'tags',  'created_at', 'last_modified']
+        read_only_fields = ['id','vendor', 'created_at', 'last_modified', 'categories_detail', 'tags_detail']
