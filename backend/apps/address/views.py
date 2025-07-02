@@ -5,9 +5,11 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class AddressViewSet(ModelViewSet):
-    queryset = Address.objects.all()
     serializer_class = AddressSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        return Address.objects.filter(user = self.request.user)
 
     def perform_create(self, serializer):
         is_default = self.request.data.get('is_default', False)
