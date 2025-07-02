@@ -11,7 +11,16 @@ from apps.order.views import OrderViewSet, OrderItemViewSet
 from apps.payment.views import PaymentViewSet
 
 from rest_framework.routers import DefaultRouter
-
+from rest_framework_simplejwt.views import (
+                                            TokenObtainPairView,
+                                            TokenRefreshView,
+                                            )
+from drf_spectacular.views import (
+                                    SpectacularAPIView, 
+                                    SpectacularRedocView, 
+                                    SpectacularSwaggerView
+                                    )
+                                    
 router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='users')
 router.register(r'vendors', VendorProfileViewSet, basename='vendors')
@@ -31,6 +40,12 @@ router.register(r'payments', PaymentViewSet, basename='payment')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+
+    #documentation
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Optional UI:
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 
 urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
