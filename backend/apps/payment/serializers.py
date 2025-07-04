@@ -9,5 +9,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Payment
-        fields = ['id', 'user', 'order', 'stripe_payment_id', 'amount', 'status', 'created_at', 'updated_at']
-        read_only_fields = ['user', 'stripe_payment_id', 'status', 'created_at']
+        fields = ['id', 'order', 'razorpay_order_id', 'razorpay_payment_id', 'razorpay_signature', 'status', 'amount', 'created_at']
+        read_only_fields = ['id','order', 'razorpay_order_id', 'razorpay_payment_id', 'razorpay_signature', 'status', 'amount', 'created_at']
+
+        

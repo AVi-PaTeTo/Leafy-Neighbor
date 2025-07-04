@@ -7,7 +7,8 @@ class AddressSerializer(ModelSerializer):
         model = Address
         fields = [
                     "id", 
-                    "user", 
+                    "user",
+                    "name", 
                     "address_type",
                     "phone", 
                     "house",

@@ -18,8 +18,7 @@ class Order(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICE, default='PENDING')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    shipping_address = models.TextField()
-    billing_address = models.TextField(null=True, blank=True)
+    shipping_address = models.TextField(null=False, blank=False)
 
     class Meta:
         indexes = [
@@ -37,6 +36,8 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
+    
+    product_name = models.CharField(max_length=255, null=True, blank=True)
     quantity = models.PositiveIntegerField()
     unit_price = models.DecimalField(max_digits=10, decimal_places=2)
 

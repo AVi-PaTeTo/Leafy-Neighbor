@@ -41,6 +41,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
 
+    #token authentication
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
     #documentation
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Optional UI:

@@ -1,14 +1,74 @@
 from django.shortcuts import render
+from django.db import transaction
 from .models import Order,OrderItem
 from .serializers import OrderSerializer, OrderItemSerializer
-
+from apps.address.models import Address
+from apps.cart.models import Cart
 from rest_framework import viewsets
+from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+
+
+def address_format(address):
+    return(f"{address.name}\n"
+           f"{address.phone}\n"
+           f"{address.house}, {address.street}\n"
+           f"{address.city} - {address.pincode}\n"
+           f"{address.state}\n")
+
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return Order.objects.all()
+        return Order.objects.filter(user=user)
+
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve', 'create']:
+            permission_classes = [IsAuthenticated]
+        elif self.action in ['update', 'partial_update', 'destroy']:
+            permission_classes = [IsAdminUser]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        try:
+            cart = Cart.objects.get(user=user)
+        except Cart.DoesNotExist:
+            raise ValidationError({"cart": "No cart found for this user."})
+
+        try:
+            default_address = address_format(Address.objects.get(user=user, is_default=True))
+        except Address.DoesNotExist:
+            raise ValidationError({"address": "No default address found. Please add one before ordering."})
+
+        with transaction.atomic():
+            order = serializer.save(
+                user=user,
+                total=0,
+                shipping_address=default_address,
+                status="PENDING"
+            )
+
+            for item in cart.items.all():
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    product_name=item.product.title,
+                    quantity=item.quantity,
+                    unit_price=item.price
+                )
+
+            order.total = cart.total
+            order.save()
+            cart.items.all().delete()
 
 class OrderItemViewSet(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
+    permission_classes = [IsAuthenticated]
