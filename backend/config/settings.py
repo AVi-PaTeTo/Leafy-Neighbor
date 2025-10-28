@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-yo#d+21_ei_ri81oz5qqp_+vlkt(eskf0b=u&bjo7%&bil@&lg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -52,7 +52,7 @@ INSTALLED_APPS = [
 
     "rest_framework",
     'django_filters',
-
+    'corsheaders',
     #profiling
     'silk',
 
@@ -66,6 +66,8 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "user.CustomUser"
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -105,7 +107,8 @@ REST_FRAMEWORK = {
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': [ 'url_filter.integrations.drf.DjangoFilterBackend',
+                                'django_filters.rest_framework.DjangoFilterBackend']
 }
 
 SIMPLE_JWT = {
@@ -170,3 +173,13 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = os.path.join(BASE_DIR,"static")
+
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
+MEDIA_URL = '/media/'
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "http://localhost:8080",
+#     "http://127.0.0.1:8000"  # React frontend
+# ]
+CORS_ALLOW_ALL_ORIGINS = True

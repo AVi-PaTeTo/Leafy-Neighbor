@@ -11,6 +11,13 @@ class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    def get_queryset(self):
+        queryset = Review.objects.all()
+        product_id = self.request.query_params.get('product_id')
+        if product_id is not None:
+            queryset = queryset.filter(product_id=product_id)
+        return queryset
+
     def perform_create(self, serializer):
         product = serializer.validated_data['product']
         user = self.request.user

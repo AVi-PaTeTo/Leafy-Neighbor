@@ -8,7 +8,7 @@ User = get_user_model()
 class Product(models.Model):
     title = models.CharField(max_length=255)
     vendor = models.ForeignKey(VendorProfile, on_delete=models.CASCADE, related_name="products")
-    description = models.TextField()
+    description = models.JSONField()
     stock = models.PositiveIntegerField()
     price = models.PositiveIntegerField()
 
@@ -20,3 +20,13 @@ class Product(models.Model):
     
     def __str__(self):
         return self.title
+    
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to="images/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
+class DummyIMG(models.Model):
+    img = models.ImageField(upload_to="images/")

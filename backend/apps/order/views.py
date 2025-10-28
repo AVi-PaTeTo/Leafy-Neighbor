@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.db import transaction
+from django.db.models import Subquery, OuterRef, Prefetch
+from apps.product.models import ProductImage
 from .models import Order,OrderItem
 from .serializers import OrderSerializer, OrderItemSerializer
 from apps.address.models import Address
@@ -22,9 +24,38 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_staff:
-            return Order.objects.all()
-        return Order.objects.filter(user=user)
+
+        first_image_qs = ProductImage.objects.filter(
+            product=OuterRef('product_id')
+        ).order_by('id').values('image')[:1]
+
+        # if user.is_staff:
+        #     return(
+        #     Order.objects.all()
+        #     .prefetch_related(
+        #         Prefetch(
+        #             'order_items',
+        #             queryset=OrderItem.objects
+        #                 .select_related('product')
+        #                 .annotate(first_image=Subquery(first_image_qs))
+        #                 .order_by('-unit_price','-quantity')
+        #         )
+        #     )
+        # )
+        return (
+            Order.objects
+            .filter(user=user)
+            .prefetch_related(
+                Prefetch(
+                    'order_items',
+                    queryset=OrderItem.objects
+                        .select_related('product')
+                        .annotate(first_image=Subquery(first_image_qs))
+                        .order_by('-unit_price','-quantity')
+                )
+            )
+        )
+
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve', 'create']:
@@ -72,3 +103,17 @@ class OrderItemViewSet(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = OrderItem.objects.all()
+        
+        first_image_qs = ProductImage.objects.filter(
+            product=OuterRef('product_id')
+        ).order_by('id').values('image')[:1]
+
+        order_id = self.request.query_params.get('order_id')
+        if order_id is not None:
+            queryset = (queryset.filter(order_id=order_id)
+                                .select_related('product','order')
+                                .annotate(first_image=Subquery(first_image_qs)))
+        return queryset

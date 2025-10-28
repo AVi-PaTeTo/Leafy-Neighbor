@@ -9,15 +9,23 @@ User = get_user_model()
 
 class CartItemSerializer(serializers.ModelSerializer):
     product_name = serializers.ReadOnlyField(source='product.title')
+    product_image = serializers.SerializerMethodField()
     class Meta:
         model = CartItem
-        fields = ['id', 'cart', 'product', 'product_name', 'price', 'quantity', 'added_on']
-        read_only_fields = ['id', 'cart', 'price', 'added_on']
+        fields = ['id', 'cart', 'product', 'product_name', 'price', 'quantity', 'product_image', 'added_on']
+        read_only_fields = ['id', 'cart', 'price', 'added_on', 'product_image']
 
+    def get_product_image(self, obj):
+        if obj.first_image:
+            request = self.context.get('request')
+            return request.build_absolute_uri(f"/media/{obj.first_image}")
+        return None
+    
 class CartSerializer(serializers.ModelSerializer):
     items = CartItemSerializer(many=True)
 
     class Meta:
+        
         model = Cart
         fields = ['id', 'user', 'items', 'total', 'last_updated']
         read_only_fields = ['id', 'user', 'items', 'total', 'last_updated']
