@@ -8,7 +8,7 @@ from apps.review.views import ReviewViewSet
 from apps.wishlist.views import WishlistViewSet, WishlistItemViewSet
 from apps.cart.views import CartViewSet, CartItemViewSet
 from apps.order.views import OrderViewSet, OrderItemViewSet
-from apps.payment.views import PaymentViewSet
+from apps.payment.views import PaymentViewSet, create_razorpay_order
 from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework.routers import DefaultRouter
@@ -21,6 +21,7 @@ from drf_spectacular.views import (
                                     SpectacularRedocView, 
                                     SpectacularSwaggerView
                                     )
+
                                     
 router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='users')
@@ -40,7 +41,6 @@ router.register(r'carts', CartViewSet, basename='cart')
 router.register(r'cart-items', CartItemViewSet, basename='cartitem')
 router.register(r'orders', OrderViewSet, basename='order')
 router.register(r'order-items', OrderItemViewSet, basename='orderitem')
-router.register(r'payments', PaymentViewSet, basename='payment')
 
 
 
@@ -59,6 +59,7 @@ urlpatterns = [
     # Optional UI:
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('api/payments/', include('apps.payment.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]

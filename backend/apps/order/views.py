@@ -9,7 +9,10 @@ from apps.cart.models import Cart
 from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-
+from rest_framework.response import Response
+from django.conf import settings
+from apps.payment.models import Payment
+from .utils import razorpay_client
 
 def address_format(address):
     return(f"{address.name}\n"
@@ -18,16 +21,6 @@ def address_format(address):
            f"{address.city} - {address.pincode}\n"
            f"{address.state}\n")
 
-
-class OrderViewSet(viewsets.ModelViewSet):
-    serializer_class = OrderSerializer
-
-    def get_queryset(self):
-        user = self.request.user
-
-        first_image_qs = ProductImage.objects.filter(
-            product=OuterRef('product_id')
-        ).order_by('id').values('image')[:1]
 
         # if user.is_staff:
         #     return(
@@ -42,6 +35,18 @@ class OrderViewSet(viewsets.ModelViewSet):
         #         )
         #     )
         # )
+
+class OrderViewSet(viewsets.ModelViewSet):
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+
+        first_image_qs = ProductImage.objects.filter(
+            product=OuterRef('product_id')
+        ).order_by('id').values('image')[:1]
+
+
         return (
             Order.objects
             .filter(user=user)
@@ -99,6 +104,7 @@ class OrderViewSet(viewsets.ModelViewSet):
             order.save()
             cart.items.all().delete()
 
+        
 class OrderItemViewSet(viewsets.ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
@@ -116,4 +122,6 @@ class OrderItemViewSet(viewsets.ModelViewSet):
             queryset = (queryset.filter(order_id=order_id)
                                 .select_related('product','order')
                                 .annotate(first_image=Subquery(first_image_qs)))
+        else:
+            queryset = queryset.annotate(first_image=Subquery(first_image_qs))
         return queryset

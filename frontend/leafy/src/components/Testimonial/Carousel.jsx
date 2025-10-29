@@ -56,7 +56,7 @@ const cards = [
     title: "The Vine Whisperer",
     review:
       "I started by sharing my vines with friends, and now I sell my hanging plant cuttings on Leafy. It’s so easy to manage listings and connect with other plant lovers. I've shipped to 4 states already!",
-    portrait: hangingPlantLover,
+    portrait: [hangingPlantLover,hangingPlantLoverAvif, hangingPlantLoverWebp],
     img: [hang, hangAvif, hangWebp],
   },
 
@@ -65,7 +65,7 @@ const cards = [
     title: "The Feline-Friendly Gardener",
     review:
       "Finding cat-safe plants used to be a hassle—until I found Leafy. Now I shop with peace of mind knowing the listings are clear, and I’ve even followed a few vendors who specialize in pet-friendly greenery.",
-    portrait: plantAndPet,
+    portrait: [plantAndPet,plantAndPetAvif, plantAndPetWebp],
     img: [living, livingAvif, livingWebp],
   },
 
@@ -74,7 +74,7 @@ const cards = [
     title: "Plant Stylist",
     review:
       "Leafy helped me turn my small apartment into a jungle dream. I found stylish planters and the perfect low-light plants from vendors who know what they’re doing. Everything was delivered with care.",
-    portrait: succulentLover,
+    portrait: [succulentLover,succulentLoverAvif, succulentLoverWebp],
     img: [indoor, indoorAvif, indoorWebp],
   },
 
@@ -83,7 +83,7 @@ const cards = [
     title: "The Backyard Blossom",
     review:
       "I wanted to gift my granddaughter a tulsi plant and found a lovely one right on Leafy. I also discovered new seeds and fertilizers I couldn’t find in local stores. Everything came to my doorstep!",
-    portrait: enthusiast,
+    portrait: [enthusiast,enthusiastAvif, enthusiastWebp],
     img: [backyard, backyardAvif, backyardWebp],
   },
 
@@ -92,7 +92,7 @@ const cards = [
     title: "The Plant Curator",
     review:
       "Selling online used to be confusing, but Leafy made it effortless. Now I list my plants directly from my nursery, and buyers from across the city find me. I’ve sold more in 3 months than the past year!",
-    portrait: gardener,
+    portrait:[ gardener,gardenerAvif, gardenerWebp],
     img: [nursery, nurseryAvif, nurseryWebp],
   },
 ];
@@ -166,14 +166,14 @@ export default function Carousel() {
                 {/* testimonial portrait */}
                 <div className="block absolute z-4 right-1/2 translate-x-1/2 sm:translate-x-0 sm:right-10 mid-md:hidden h-[150px] w-[150px] sm:h-[200px] sm:w-[200px] bg-primary rounded-[50%] overflow-clip">
                   <picture>
-                    <source srcSet={item.portrait+'Webp'} type="image/webp" />
-                    <source srcSet={item.portrait+'Avif'} type="image/avif" />
-                    <img  className="object-fit" src={item.portrait} alt={item.name} />
+                    <source srcSet={item.portrait[2]} type="image/webp" />
+                    <source srcSet={item.portrait[1]} type="image/avif" />
+                    <img  className="object-fit" src={item.portrait}  />
                   </picture>
                 </div>
                 <img
                   className="hidden mid-md:block relative z-6 object-fit"
-                  src={item.portrait}
+                  src={item.portrait[0]}
                   alt=""
                 />
 

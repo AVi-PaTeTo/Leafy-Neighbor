@@ -60,9 +60,9 @@ const NavIcons = (props) => {
     >
       <div className={` flex flex-col gap-2  overflow-hidden`}>
         <Link className="hover:translate-x-2 transition-all ease-in-out duration-50" to={'settings'}>Profile</Link>
-        <p className="hover:translate-x-2 transition-all ease-in-out duration-50" >Addresses</p>
+        <p className="hover:translate-x-2 hover:cursor-no-drop transition-all ease-in-out duration-50" >Addresses</p>
         <Link className="hover:translate-x-2 transition-all ease-in-out duration-50 " to={'orders'}>Your Orders</Link>
-        <p onClick={() => logButton()} className="hover:translate-x-2 transition-all ease-in-out duration-50" >{currentUser!=null? 'Log out':'Log In'}</p>
+        <p onClick={() => logButton()} className="hover:translate-x-2 hover:cursor-pointer transition-all ease-in-out duration-50" >{currentUser!=null? 'Log out':'Log In'}</p>
       </div>
     </div>
   </section>  

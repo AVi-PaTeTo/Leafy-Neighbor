@@ -46,7 +46,7 @@ const NavLinks = (props) => {
           className={`absolute bg-gray-100 left-17 top-[33px] rounded-sm shadow-sm transition-all ease-in-out duration-200 grid ${categoryDropdown?'grid-rows-[1fr] pt-4 pb-2':'grid-rows-[0fr]'}`}>
         <div className="overflow-hidden flex flex-col gap-2 pl-8 w-[200px]">
           {props.categories.map(category => (
-            <p onClick={()=>navigate(`/browse?category=${category.id}`, { replace: true })} className="hover:cursor-pointer hover:translate-x-2 transition-all ease-in-out duration-50" key={category.id}>{category.name}</p>
+            <p onClick={()=>navigate(`/browse?category=${category.id}`)} className="hover:cursor-pointer hover:translate-x-2 transition-all ease-in-out duration-50" key={category.id}>{category.name}</p>
           ))}
         </div>
 

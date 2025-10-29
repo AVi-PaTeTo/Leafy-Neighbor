@@ -122,6 +122,16 @@ export const getOrderById = async(id) => {
     return response
 }
 
+export const createOrder = async() => {
+    const response = await API.post('/orders/')
+    return response
+}
+
+export const razorDetails = async(orderId) => {
+    const response = await API.post(`/payments/initiate/`, {order_id: orderId})
+    return response.data
+}
+
 //User Info
 export const getUser = async(id) => {
     const response = await API.get(`/users/${id}`)

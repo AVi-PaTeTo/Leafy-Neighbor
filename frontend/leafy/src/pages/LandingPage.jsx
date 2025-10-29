@@ -1,6 +1,7 @@
 import HeroSection from "../components/Hero/HeroSection"
 import Highlights from "../components/Highlights/Highlights";
 import Navbar from "../components/NavBar/Navbar"
+import Logo from "../components/NavBar/Logo";
 import Showcase from "../components/Showcase/Showcase";
 import Carousel from "../components/Testimonial/Carousel";
 import { useUser } from "../context/UserContext";
@@ -29,11 +30,19 @@ const LandingPage = () => {
 
 
 
-      <section className="w-full h-fit bg-gray-100 ">
-        <div className="h-[340px] bg-black/80 flex items-center justify-center">
-          <p className="text-xl font-semibold">Footer</p>
+    <section className="w-full h-fit bg-gray-100">
+      <div className="h-[140px] bg-black/80 flex flex-col sm:flex-row items-center justify-between px-8">
+        
+        <div className="">
+          <Logo size={'60px'}  f_size={'1.8rem'} font={'text-zinc-200'}/>
         </div>
-      </section>  
+        
+
+          <div className="text-gray-300 text-sm  tracking-wide ">
+            © {new Date().getFullYear()} Leafy Neighbour.  All rights reserved.
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

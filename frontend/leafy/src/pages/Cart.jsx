@@ -2,10 +2,9 @@
 import bg from "../assets/b5.png"
 import { useEffect,useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserCart, updateQuant, removeItem } from "../api/ApiFunctions";
-import Checkout from "./Checkout";
+import { getUserCart, updateQuant, removeItem, createOrder, razorDetails } from "../api/ApiFunctions";
 
-
+import API from "../api/axios";
 
 const BG_IMG = "https://videos.openai.com/vg-assets/assets%2Ftask_01k13mvb1kf9187sd0y08kqcq5%2F1753542958_img_1.webp?st=2025-07-26T13%3A50%3A10Z&se=2025-08-01T14%3A50%3A10Z&sks=b&skt=2025-07-26T13%3A50%3A10Z&ske=2025-08-01T14%3A50%3A10Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=3d249c53-07fa-4ba4-9b65-0bf8eb4ea46a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=JRMjxUEoDdMm6SfRrwQS2knf7tUTUlRIOLU5%2BfAzITU%3D&az=oaivgprodscus"
 
@@ -110,7 +109,47 @@ const Cart = (props) => {
             }
     }
 
-    // console.log(loading)
+
+        const handlePayment = async () => {
+            const order = await createOrder();
+            const data = await razorDetails(order.data.id)
+
+
+            try {
+            const { razorpay_key, razorpay_order_id, amount, currency } = data;
+
+            // 2. Configure Razorpay
+            const options = {
+                key: razorpay_key,
+                amount: amount,
+                currency: currency,
+                name: "Leafy Neighbour",
+                description: "Purchase Order",
+                order_id: razorpay_order_id,
+                handler: async function (response) {
+                // 3. Send details to backend for verification
+                await API.post("/payments/verify/", {
+                    razorpay_order_id: response.razorpay_order_id,
+                    razorpay_payment_id: response.razorpay_payment_id,
+                    razorpay_signature: response.razorpay_signature,
+                });
+                alert("Payment successful!");
+                },
+                theme: { color: "#3399cc" },
+            };
+
+            const razor = new window.Razorpay(options);
+            razor.open();
+
+            } catch (err) {
+            console.error("Payment error", err);
+            }
+    }
+
+    function handleCardClick(id,prodName){
+        navigate(`/browse/${prodName}`, { state: { id } });
+    }
+    // console.log(cartItems)
     return(
         <div className="relative w-full h-screen min-h-screen ">
             <div className={`transition-all ease-in-out duration-200 fixed inset-0 bg-black/70  px-4 ${loading? 'opacity-100 z-10': 'opacity-0 z-[-10]'}`}>
@@ -152,9 +191,9 @@ const Cart = (props) => {
                                 <h2 className="font-semibold text-3xl pt-1 text-gray-100 tracking-wide">Cart Total: </h2>
                                 <h2 className="font-semibold text-3xl pt-1 text-gray-100 tracking-wide">₹ {cartTotal}</h2>
                             </div>
-                            <Link to={'/checkout'} className="hidden sm:flex items-center gap-4 py-1 px-4 text-xl font-bold rounded-md bg-primary shadow-sm">
+                            <button onClick={() => handlePayment()} className="hidden hover:cursor-pointer sm:flex items-center gap-4 py-1 px-4 text-xl font-bold rounded-md bg-primary shadow-sm">
                                 <span className="pt-1 font-semibold">Checkout</span>
-                            </Link>
+                            </button>
                         </div>
                     </div>
 
@@ -177,7 +216,8 @@ const Cart = (props) => {
                                             <div className="flex flex-col w-full h-full">
                                                 <div className="flex flex-col w-full h-full justify-between">
                                                     <div className="px-2 sm:px-4 md:px-8 pt-4 max-w-full overflow-clip">
-                                                        <h2 className="font-semibold text-2xl md:text-4xl">{item.product_name}</h2>
+                                                        <h2 className="relative font-semibold text-2xl md:text-4xl">{item.product_name}</h2>
+                                                        <div onClick={()=>handleCardClick(item.product, item.product_name)} className="absolute inset-0"></div>
                                                     </div>
                                                     <div className="flex w-full flex-wrap">
                                                         <h2 className="pl-2 sm:pl-4 md:pl-8 font-semibold text-2xl md:text-3xl">₹ {item.price}</h2>

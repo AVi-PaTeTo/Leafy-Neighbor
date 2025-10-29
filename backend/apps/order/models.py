@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from apps.product.models import Product
+from .utils import generate_order_id
+
 User = get_user_model()
 
 
@@ -15,19 +17,26 @@ class Order(models.Model):
         ('CANCELLED', 'Cancelled')
     )
 
+    order_id = models.CharField(max_length=30, unique=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='orders')
     total = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=20, choices=STATUS_CHOICE, default='PENDING')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     shipping_address = models.TextField(null=False, blank=False)
-
     class Meta:
         indexes = [
             models.Index(fields=['status']),
             models.Index(fields=['created_at']),
             models.Index(fields=['user'])
         ]
+
+    def save(self, *args, **kwargs):
+        if not self.order_id:
+            super().save(*args, **kwargs)  # Save first to get the ID
+            self.order_id = generate_order_id()
+            return super().save(update_fields=["order_id"])
+        super().save(*args, **kwargs)
 
     def calculate_total(self):
         return sum(item.quantity * item.unit_price for item in self.order_items.all())

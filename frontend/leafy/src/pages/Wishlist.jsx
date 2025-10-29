@@ -2,6 +2,9 @@
 import bg from "../assets/b5.png"
 import { getWishlist, createWishlist, deleteWishlist, deleteFromWishlist, addToCart } from "../api/ApiFunctions";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+
 const Wishlist = (props) => {
     const [wishlist, setWishlist] = useState([])
     const [createPopup, setCreatePopup] = useState(false)
@@ -13,13 +16,13 @@ const Wishlist = (props) => {
             const response = await getWishlist()
             setWishlist(response.data)
         }
-
+    
+    const navigate = useNavigate()
+    
     useEffect(()=>{
-        
         refreshWishlists()
     },[])
 
-    console.log(wishlist)
     useEffect(() => {
     if (createPopup || deletePopup) {
         document.body.classList.add('noscroll');
@@ -123,6 +126,12 @@ const Wishlist = (props) => {
             }
     }
 
+    function handleCardClick(id,prodName){
+        navigate(`/browse/${prodName}`, { state: { id } });
+    }
+
+
+    console.log(wishlist)
     return(
         <div className="w-full h-full min-h-screen">
             {createPopup && <div    onClick={(e) => {if (e.target === e.currentTarget) {setCreatePopup(false);}}}
@@ -195,8 +204,9 @@ const Wishlist = (props) => {
                                                     </button>
                                                     <img className="h-full object-contain self-start rounded-l-md" src={item.product_image} alt="" />
                                                     <div className="flex flex-col w-full justify-between">
-                                                        <div className="px-2 sm:px-4 md:px-8 pt-4 w-full">
+                                                        <div className="px-2 relative sm:px-4 md:px-8 pt-4 w-full">
                                                             <h2 className="font-semibold text-2xl md:text-3xl">{item.product_title}</h2>
+                                                            <div onClick={() => handleCardClick(item.product,item.product_title)} className="absolute inset-0"></div>
                                                         </div>
                                                         <h2 className="px-2 sm:px-4 md:px-8 font-semibold text-2xl md:text-3xl">₹ {item.product_price}</h2>
                                                         <div className="flex flex-col w-fit md:w-full sm:flex-row self-end sm:justify-end gap-2 pb-2 px-2 sm:gap-4 sm:pb-4 sm:px-4">

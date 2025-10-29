@@ -113,7 +113,7 @@ const Order = (props) => {
                                                     <div className="flex w-full flex-col md:gap-4">
                                                         <div className="flex justify-between flex-col sm:flex-row sm:gap-4">
                                                             <p className="text-[0.9rem] align-sub pt-1">Order Id: </p>
-                                                            <p className="font-semibold text-[1.1rem]">#1234567891011</p>
+                                                            <p className="font-semibold text-[1.1rem]">{order.order_id}</p>
                                                         </div>
                                                         <div className="flex justify-between flex-col sm:flex-row sm:gap-4">
                                                             <p className="text-[0.9rem] align-sub pt-1">Ordered on: </p>

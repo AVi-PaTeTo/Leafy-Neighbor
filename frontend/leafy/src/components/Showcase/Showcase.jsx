@@ -8,32 +8,39 @@ import mobileFlower from "../../assets/mobileFlower.png";
 import mobileSucculents from "../../assets/mobileSucculent.png";
 import mobileTools from "../../assets/mobileTools.png";
 import mobileHanging from "../../assets/mobileHanging.png";
+import { useNavigate } from "react-router-dom";
 
 
 const cards = [
+
   {
+    id:9,
     title: "Outdoor Plants",
     desc:
       "Tough enough to brave the outdoors, yet charming enough to welcome in.",
     img: mobileOutdoor,
   },
   {
+    id:11,
     title: "Flowering Plants",
     desc:
       "A pop of color and a breath of fragrance, all in one lovely bloom.",
     img: mobileFlower,
   },
   {
+    id:10,
     title: "Succulents",
     desc: "Low effort, high charm. Perfect for forgetful friends.",
     img: mobileSucculents,
   },
   {
+    id:13,
     title: "Plant Care",
     desc: "Everything you need to pamper your leafy companions.",
     img: mobileTools,
   },
   {
+    id:14,
     title: "Hanging Plants",
     desc: "Take your plant obsession to new heights—literally.",
     img: mobileHanging,
@@ -50,6 +57,8 @@ const handleWheel = (e) => {
 };
 
 const Showcase = () => {
+  const navigate = useNavigate()
+
   return (
     <section className="w-full">
       {/* Mobile swipe layout */}
@@ -60,7 +69,8 @@ const Showcase = () => {
               key={i}
               className="relative flex-shrink-0 w-[80vw] h-[440px] bg-gray-100 rounded-lg shadow-md overflow-hidden group"
             >
-              <div className="z-1 inset-0 flex flex-col justify-end gap-2 px-5 pt-5 bg-gradient-to-t from-white/90 to-transparent">
+              <div onClick={()=>navigate(`/browse?category=${card.id}`)} className="absolute inset-0"></div>
+              <div className="z-1 inset-0 flex flex-col justify-end gap-2 px-5 pt-5 ">
                 <h2 className="text-2xl font-bold text-text">{card.title}</h2>
                 <p className="text-text text-[1rem] font-light">
                   {card.desc}
@@ -86,7 +96,7 @@ const Showcase = () => {
           src={outdoorPlants}
           alt=""
         />
-
+        <div onClick={()=>navigate(`/browse?category=${9}`)} className="absolute inset-0"></div>
         <div className="absolute rounded-md inset-0 text-text flex flex-col items-baseline justify-end px-8 py-12 gap-1.5">
           <h2 className="text-3xl font-bold">Outdoor Plants</h2>
           <p className="font-light text-[1.1rem]">
@@ -104,6 +114,7 @@ const Showcase = () => {
           src={floweringPlants}
           alt=""
         />
+        <div onClick={()=>navigate(`/browse?category=${11}`)} className="absolute inset-0"></div>
         <div className="absolute rounded-md h-full w-[50%] left-0 text-text flex flex-col items-start justify-center px-8 py-12">
           <h2 className="text-3xl font-bold">Flowering Plants</h2>
           <p className="font-light text-[1.1rem]">
@@ -125,6 +136,7 @@ const Showcase = () => {
           src={succulents}
           alt=""
         />
+        <div onClick={()=>navigate(`/browse?category=${10}`)} className="absolute inset-0"></div>
         <div className="absolute rounded-md h-full w-[60%] right-0 text-text flex flex-col items-start justify-center px-8 py-12">
           <h2 className="text-3xl font-bold">Succulents</h2>
           <p className="font-light text-[1.1rem]">
@@ -134,6 +146,7 @@ const Showcase = () => {
       </div>
 
       {/* Card - 4 */}
+      
       <div className="relative overflow-hidden rounded-lg col-start-4 row-end-9 row-start-5 col-end-9 lg:col-start-3 lg:col-end-6 xl:col-end-5 xl:row-end-9  bg-gray-100  shadow-md group">
         <img
           loading="lazy"
@@ -141,6 +154,7 @@ const Showcase = () => {
           src={plantCare}
           alt=""
         />
+        <div onClick={()=>navigate(`/browse?category=${13}`)} className="absolute inset-0"></div>
         <div className="absolute rounded-md h-full w-[50%] left-0 text-text flex flex-col items-start justify-center px-8 py-12">
           <h2 className="text-3xl font-bold">Plant Care</h2>
           <p className="font-light text-[1.1rem]">
@@ -150,6 +164,7 @@ const Showcase = () => {
       </div>
 
       {/* Card - 5 */}
+      
       <div className="  flex overflow-hidden rounded-lg lg:col-start-6 relative lg:row-start-1 xl:col-start-5 xl:row-start-5 col-end-9 row-end-9 bg-gray-100 shadow-md group">
         <img
           loading="lazy"
@@ -157,6 +172,7 @@ const Showcase = () => {
           src={hangingPlants}
           alt=""
         />
+        <div onClick={()=>navigate(`/browse?category=${14}`)} className="absolute inset-0"></div>
         <div className="absolute rounded-md lg:bottom-0 h-full xl:w-[50%] right-0 text-text flex flex-col lg:items-baseline lg:justify-end xl:items-start xl:justify-center px-8 py-12">
           <h2 className="text-3xl font-bold">Hanging Plants</h2>
           <p className="font-light text-[1.1rem]">

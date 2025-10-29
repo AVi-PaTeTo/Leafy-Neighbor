@@ -41,7 +41,7 @@ const Navbar = (props) => {
 
                 <div id='items' className="relative flex justify-between  w-full h-full -top-1">
                     <div className="absolute md:static -translate-y-[9px]">
-                            <Logo sidebar={sidebar} search={props.searchActive} font={'text-text'}/>
+                            <Logo sidebar={sidebar} search={props.searchActive} size={'40px'} f_size={'1.1rem'} font={'text-text'}/>
                     </div>
                     <div className="w-full h-full pr-2 md:px-4">
                         <div className="relative flex justify-between md:justify-center z-10">

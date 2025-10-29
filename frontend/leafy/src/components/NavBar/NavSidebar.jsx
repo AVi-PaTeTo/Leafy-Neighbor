@@ -43,7 +43,7 @@ const NavSidebar = (props) => {
             <div className={`h-screen transition-all ease-in-out duration-700  bg-gray-800 ${props.sidebar?'w-[300px]':'w-0 '} overflow-hidden fixed md:hidden z-31`}>
                 <div className="relative h-full">
                     <div className="absolute w-[300px] pt-1 top-[-1px] left-[57px]  bg-gray-800 z-5">
-                        <Logo font={'text-white'}/>
+                        <Logo  size={'40px'} f_size={'1.1rem'} font={'text-white'}/>
                     </div>
                     <div className="overflow-hidden overflow-y-auto .hide-scrollbar h-[calc(100vh-56px)]">
                         <div className={` w-full h-fit px-8 pt-20 flex flex-col gap-3  ${props.sidebar? '':''} font-semibold text-xl text-white`}>
