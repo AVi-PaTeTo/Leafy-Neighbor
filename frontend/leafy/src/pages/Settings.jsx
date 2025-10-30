@@ -1,7 +1,7 @@
 import { use, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
-import { getUser, getUserAddress, patchUserAddress, postAddress, changePassword, saveUserInfo } from "../api/ApiFunctions";
+import { getUser, getUserAddress, patchUserAddress, postAddress, changePassword, saveUserInfo, becomeVendor } from "../api/ApiFunctions";
 import bg from "../assets/sora.png"
 
 
@@ -54,8 +54,6 @@ const Settings = () =>{
     const [changePassPop, setChangePassPop] = useState(false)
     const [passError, setPassError] = useState('')
 
-
-    console.log(currentUserId)
     useEffect(() => {
         const fetchUserData = async() =>{
             const response = await getUser(currentUserId)
@@ -224,7 +222,17 @@ const Settings = () =>{
         }
     }
 
+    const vendorButton = async () =>{
+        if(!userData.is_vendor){
+
+            const response = await becomeVendor(userData.id)
+            navigate(`/vendor/${response.data.vendor_profile.id}`)
+        } else {
+            navigate(`/vendor/${userData.vendor_profile.id}`)
+        }
+    }
     
+
     return(
         <div className="w-full h-fit min-h-screen bg-gradient-to-b from-zinc-800 to bg-zinc-950">
             {/* <div className="fixed flex h-full w-screen -z-5">
@@ -374,7 +382,7 @@ const Settings = () =>{
                     <div
                         onClick={() => setPfpPopup(true)}
                         className="absolute w-36 h-36 bg-black/20 rounded-[50%] overflow-hidden shadow-lg group">
-                        <img className="z-1" src={userData.pfp == ''? null: userData.pfp} alt="" />
+                        <img className="z-1" src={(userData.pfp == null || userData.pfp == '') || userData == undefined? 'https://i.pinimg.com/736x/2b/72/16/2b7216ec94eaed014688f94bb898c81d.jpg': userData.pfp} alt="" />
                         <div className="absolute w-full bottom-[-40px] group-hover:bottom-[0px] text-center z-5 bg-black/50 text-white font-bold tracking-wide py-2 transition-all duration-200 ease-in-out">Edit</div>
                     </div>
                 </div>
@@ -384,8 +392,8 @@ const Settings = () =>{
                         <p className="pt-1">{userData.is_vendor?'Vendor account active.':'Got a business?'}</p>
                         <button
                             className="py-1 px-3 bg-primary shadow-sm rounded-sm font-semibold hover:cursor-pointer"
-                            disabled={userData.is_vendor == ""}
-                            onClick={() => navigate(`/vendor/${userData.vendor_profile.id}`)}
+                            disabled={userData.is_vendor === ""}
+                            onClick={() => vendorButton()}
                             >
                             {userData.is_vendor?'Go to Dashboard':'Become a vendor'}
                         </button>

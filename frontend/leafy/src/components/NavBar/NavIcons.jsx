@@ -56,7 +56,7 @@ const NavIcons = (props) => {
     <div 
         onMouseOver={()=>setUserMenu(true)} 
         onMouseLeave={()=>setUserMenu(false)} 
-        className={`absolute bg-gray-100 shadow-sm rounded-sm pl-6 w-[170px] z-60 right-0 top-11 grid transition-all ease-in-out duration-200 ${userMenu? 'grid-rows-[1fr] py-4':'grid-rows-[0fr]'}`}
+        className={`absolute  bg-gradient-to-b from-zinc-100 to-[#f7f9ef] outline-[#e7edcf]  shadow-sm rounded-sm pl-6 w-[170px] z-60 right-0 top-9 grid transition-all ease-in-out duration-200 ${userMenu? 'grid-rows-[1fr] py-4 outline-1':'grid-rows-[0fr]'}`}
     >
       <div className={` flex flex-col gap-2  overflow-hidden`}>
         <Link className="hover:translate-x-2 transition-all ease-in-out duration-50" to={'settings'}>Profile</Link>

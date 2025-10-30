@@ -19,3 +19,17 @@ class UserSerializer(serializers.ModelSerializer):
             'is_vendor': {'required': False},
             'username': {'required': True}
         }
+
+class CreateUserSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    username = serializers.CharField()
+    password = serializers.CharField(write_only=True)
+
+class ChangePasswordSerializer(serializers.Serializer):
+    current_password = serializers.CharField(write_only=True, required=True)
+    new_password = serializers.CharField(write_only=True, required=True)
+
+class MakeVendorSerializer(serializers.Serializer):
+    pfp = serializers.CharField()
+    business_name = serializers.CharField()
+    location = serializers.CharField()

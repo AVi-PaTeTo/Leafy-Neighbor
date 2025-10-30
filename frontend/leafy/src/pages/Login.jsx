@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { jwtDecode } from "jwt-decode";
+import { userSignUp } from "../api/ApiFunctions";
 
 const Login = () => {
     const [loginFormData, setLoginFormData] = useState({email:'', password:''})
@@ -14,13 +15,15 @@ const Login = () => {
     const navigate = useNavigate();
     const {setCurrentUser} = useUser();
 
-    const handleLogin = async (e) => {
+    const disableSignUpButton = signUpFormData.sup_password.length <8 || signUpFormData.sup_password != signUpFormData.sup_confirm_password
+
+    const handleLogin = async (e, json) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
 
         try {
-        const response = await axios.post("http://localhost:8000/api/token/", loginFormData);
+        const response = await axios.post("http://localhost:8000/api/token/", json);
         
         const { access, refresh } = response.data;
 
@@ -55,7 +58,20 @@ const Login = () => {
         setSignUpFormData(prev => ({...prev, [id]:value}))
     }
 
-    
+    async function initiateSignUp(e){
+        const formData = new FormData()
+        formData.append('username',signUpFormData.sup_username)
+        formData.append('email',signUpFormData.sup_email)
+        formData.append('password',signUpFormData.sup_password)
+
+        const response = await userSignUp(formData)
+        console.log("User Created:", response.data)
+
+        handleLogin(e,{
+                        email:signUpFormData.sup_email,
+                        password:signUpFormData.sup_password
+        })
+    }
 
 
     return(
@@ -66,6 +82,8 @@ const Login = () => {
             <div className="w-full h-screen p-4 flex justify-center items-center">
                 <div className="w-full h-full overflow-clip max-h-[700px] max-w-[600px] backdrop-blur-[6px] bg-gradient-to-b from-white/50 to-primary/30 rounded-xl shadow-lg">
                     <div className="w-full h-full flex">
+
+                        {/* sign in form */}
                         <form onSubmit={handleLogin} className={`flex flex-col items-center justify-center pt-10 pb-4 px-10 sm:py-16 sm:pb-10 sm:px-30 h-full w-full shrink-0 transition-transform duration-700 ease-in-out ${!signUpFormVisible?'translate-x-0':'-translate-x-[100%] pointer-events-none'}`} action="">
                             <div className="flex flex-col w-full items-center justify-center pb-8">
                                 <h2 className="font-bold text-[2rem] text-center tracking-tight pb-2">Hello again, Neighbour!</h2>
@@ -88,7 +106,7 @@ const Login = () => {
 
                             <a className="self-end text-accent mb-6" href="">Forgot Password?</a>
 
-                            <button onClick={handleLogin} className="hover:cursor-pointer w-full  py-2 bg-primary rounded-md mb-6 font-semibold shadow-md">Sign In</button>
+                            <button onClick={(e) => handleLogin(e, loginFormData)} className="hover:cursor-pointer w-full  py-2 bg-primary rounded-md mb-6 font-semibold shadow-md">Sign In</button>
 
                             <p>or sign in with</p>
 
@@ -130,6 +148,8 @@ const Login = () => {
                                 </a>
                             </p>
                         </form>
+
+                    {/* Sign up form */}
                     <form className={`relative flex flex-col  items-center justify-center pt-10 pb-4 px-10 sm:py-16 sm:pb-10 sm:px-30 h-full w-full shrink-0 transition-transform duration-700 ease-in-out ${!signUpFormVisible?'translate-x-0 pointer-events-none':'-translate-x-[100%]'}`} action="">
                         <button tabIndex={signUpFormVisible === true? 0:-1} 
                                 onClick={(e) =>  {  e.preventDefault() 
@@ -148,7 +168,7 @@ const Login = () => {
                             <div className="flex flex-col w-full group">
                                 <label className={`${signUpFormData['sup_username'] === ''? 'translate-y-8': 'translate-y-0'} pointer-events-none  translate-x-2 transition-transform duration-500 ease-in-out group-focus-within:translate-y-0`} htmlFor="sup_username">Username</label>
                                 <input id="sup_username" 
-                                    className="border-b-2 p-1.5 focus:border-b-primary focus:outline-0 mb-4" type="email" value={signUpFormData['sup_username']} onChange={handleSignUpForm}/>
+                                    className="border-b-2 p-1.5 focus:border-b-primary focus:outline-0 mb-4" type="text" value={signUpFormData['sup_username']} onChange={handleSignUpForm}/>
                             </div>
 
                             <div className="flex flex-col w-full group">
@@ -170,7 +190,11 @@ const Login = () => {
                             </div>
                         </div>
 
-                        <button className="w-full  py-2 bg-primary rounded-md my-8 font-semibold shadow-md">Sign Up</button>
+                        <button disabled={disableSignUpButton} 
+                                className={`w-full  py-2 ${disableSignUpButton?'bg-zinc-500 cursor-not-allowed':'bg-primary cursor-pointer'} rounded-md my-8 font-semibold shadow-md`}
+                                onClick={(e)=> initiateSignUp(e)}>
+                                    Sign Up
+                        </button>
                     </form>
                     </div>
                 </div>

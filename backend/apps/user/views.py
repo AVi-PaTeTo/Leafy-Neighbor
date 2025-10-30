@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 
-from .serializers import UserSerializer, VendorProfileSerializer
+from .serializers import UserSerializer, VendorProfileSerializer,CreateUserSerializer, ChangePasswordSerializer, MakeVendorSerializer
 from .models import VendorProfile, CustomUser
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
+from drf_spectacular.utils import extend_schema
 
 User = get_user_model()
 
@@ -21,6 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
             return User.objects.all()
         return User.objects.filter(id=user.id)
 
+    # @extend_schema(request=MakeVendorSerializer)
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def make_vendor(self, request, pk=None):
         user = self.get_object()
@@ -30,8 +31,17 @@ class UserViewSet(viewsets.ModelViewSet):
         
         user.is_vendor = True
         user.save()
-        return Response({"message": "User marked as vendor."}, status=status.HTTP_200_OK)
+
+        vendor_profile, created = VendorProfile.objects.get_or_create(user=user)
+
+        # Serialize the profile as desired
+        serializer = VendorProfileSerializer(vendor_profile)
+        return Response({
+                        "message": "User marked as vendor.",
+                        "vendor_profile": serializer.data
+                    }, status=status.HTTP_200_OK)
     
+    @extend_schema(request=CreateUserSerializer)
     @action(detail=False, methods=['post'], permission_classes=[permissions.AllowAny])
     def create_user(self, request):
         email = request.data.get('email')
@@ -40,6 +50,8 @@ class UserViewSet(viewsets.ModelViewSet):
         user = CustomUser.objects.create_user(email=email, password=password, username=username)
         return Response({"message": "User created", "user_id": user.id})
 
+
+    @extend_schema(request=ChangePasswordSerializer)
     @action(detail=True, methods=['post'])
     def change_password(self, request, pk=None):
         user = self.get_object()

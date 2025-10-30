@@ -133,6 +133,11 @@ export const razorDetails = async(orderId) => {
 }
 
 //User Info
+export const userSignUp = async(formData) => {
+    const response = await API.post(`users/create_user/`, formData)
+    return response
+}
+
 export const getUser = async(id) => {
     const response = await API.get(`/users/${id}`)
     return response
@@ -145,6 +150,11 @@ export const saveUserInfo = async(id, formData)=>{
 
 export const changePassword = async(id, formData) => {
     const response = await API.post(`/users/${id}/change_password/`, formData)
+    return response
+}
+
+export const becomeVendor = async(id) => {
+    const response = await API.post(`/users/${id}/make_vendor/`)
     return response
 }
 

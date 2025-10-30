@@ -94,6 +94,7 @@ const VendorProfile = () => {
         };
         
 
+
     return(
         <div className="flex flex-col relative h-full min-h-screen w-full bg-gray-200">
             {editProfPop && 
@@ -113,7 +114,7 @@ const VendorProfile = () => {
                         </div>
                         <div className="flex flex-col">
                             <label className="font-semibold" htmlFor="location">Location</label>
-                            <input className="py-1 px-3 outline-1 outline-zinc-400 rounded-sm" name="location" value={vendorDetails['location'] != null?vendorDetails['location']: ''} onChange={(e)=> handleChange(e)} placeholder="" type="text" />
+                            <input className="py-1 px-3 outline-1 outline-zinc-400 rounded-sm" name="location" value={vendorDetails['location'] != null ?vendorDetails['location']: ''} onChange={(e)=> handleChange(e)} placeholder="" type="text" />
                         </div>
                         <button onClick={()=>saveChanges()} className="flex justify-center bg-primary py-1 rounded-sm text-xl font-semibold hover:cursor-pointer">
                             Save
@@ -140,13 +141,15 @@ const VendorProfile = () => {
             <div className="flex-1 overflow-y-auto custom-scrollbar px-4 sm:px-12 py-[1rem] ">
                 <div className="mt-16  w-full h-[200px] sm:min-h-[200px] bg-primary mb-5 px-2 sm:px-0 flex flex-col sm:flex-row justify-center sm:justify-start items-center relative top-10 sm:top-0 shadow-md">
                     <div className="self-center aspect-square absolute sm:static -top-10 sm:top-0 sm:self-start h-[100px] w-[100px] sm:w-[200px] sm:h-full bg-zinc-800 rounded-[50%] sm:rounded-tl-[0%] sm:rounded-bl-[0%] overflow-hidden shrink-0">
-                        <img className="object-center object-cover w-full h-full"  src={vendorDetails.vpfp == ''? null: vendorDetails.vpfp} alt="" />
+                        <img className="object-center object-cover w-full h-full"  src={(vendorDetails.vpfp == '' || vendorDetails.vpfp == null) && vendorDetails != undefined ? 'https://i.pinimg.com/736x/9f/e7/3f/9fe73f40dbd9713c87e785379a595ec3.jpg': vendorDetails.vpfp} alt="" />
                     </div>
                     <div onClick={() => setEditProfPop(true)} className="group absolute top-0 right-0 sm:right-0 py-2 px-2 hover:cursor-pointer">
                         <svg className="h-6 w-6 fill-text transition-all ease-in-out duration-400 group-hover:rotate-90 " xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="m382-80-18.67-126.67q-17-6.33-34.83-16.66-17.83-10.34-32.17-21.67L178-192.33 79.33-365l106.34-78.67q-1.67-8.33-2-18.16-.34-9.84-.34-18.17 0-8.33.34-18.17.33-9.83 2-18.16L79.33-595 178-767.67 296.33-715q14.34-11.33 32.34-21.67 18-10.33 34.66-16L382-880h196l18.67 126.67q17 6.33 35.16 16.33 18.17 10 31.84 22L782-767.67 880.67-595l-106.34 77.33q1.67 9 2 18.84.34 9.83.34 18.83 0 9-.34 18.5Q776-452 774-443l106.33 78-98.66 172.67-118-52.67q-14.34 11.33-32 22-17.67 10.67-35 16.33L578-80H382Zm55.33-66.67h85l14-110q32.34-8 60.84-24.5T649-321l103.67 44.33 39.66-70.66L701-415q4.33-16 6.67-32.17Q710-463.33 710-480q0-16.67-2-32.83-2-16.17-7-32.17l91.33-67.67-39.66-70.66L649-638.67q-22.67-25-50.83-41.83-28.17-16.83-61.84-22.83l-13.66-110h-85l-14 110q-33 7.33-61.5 23.83T311-639l-103.67-44.33-39.66 70.66L259-545.33Q254.67-529 252.33-513 250-497 250-480q0 16.67 2.33 32.67 2.34 16 6.67 32.33l-91.33 67.67 39.66 70.66L311-321.33q23.33 23.66 51.83 40.16 28.5 16.5 60.84 24.5l13.66 110Zm43.34-200q55.33 0 94.33-39T614-480q0-55.33-39-94.33t-94.33-39q-55.67 0-94.5 39-38.84 39-38.84 94.33t38.84 94.33q38.83 39 94.5 39ZM480-480Z"/></svg>
                         {/* <svg className="h-8 w-8 fill-text group-hover:fill-white " xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"><path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z"/></svg> */}
                     </div>
-                    <h1 className="pt-4 sm:pl-5 sm:pt-0 font-bold text-[clamp(2rem,7vw,5rem)] tracking-wider text-center">{vendorDetails != undefined?vendorDetails.business_name:'Business Name'}</h1>
+                    <h1 className="pt-4 sm:pl-5 sm:pt-0 font-bold text-[clamp(2rem,7vw,5rem)] tracking-wider text-center">
+                        {vendorDetails != undefined && vendorDetails.business_name != "" ?vendorDetails.business_name:'Business Name'}
+                    </h1>
                     <Link
                         to={vendorDetails['location'] || '#'}
                         target={vendorDetails['location'] ? '_blank' : undefined}
