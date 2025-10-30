@@ -30,7 +30,7 @@ const ProductDetail = () => {
         }
     })
 
-    console.log(id)
+
     useEffect(()=>{
         const refreshWishlists = async () => {
                         try {
@@ -89,7 +89,6 @@ const ProductDetail = () => {
                 
                 try {
                     const response = await addToCart(formData); 
-                    console.log(response)
                     } catch (error) {
                         console.error(error);
                     }       
@@ -115,7 +114,6 @@ const ProductDetail = () => {
         const fetchReviews = async() => {
             const response = await getProductReviews(id)
             setReviewsList(response.data)
-            console.log(response)
         }
         const handleScroll = () => {
         const currentScrollY = window.scrollY;
@@ -139,8 +137,6 @@ const ProductDetail = () => {
         
     }, []);
 
-    console.log(prodData)
-    console
     return(
         <div className="relative w-full min-h-screen">
 

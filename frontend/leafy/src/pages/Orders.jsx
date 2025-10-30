@@ -63,7 +63,6 @@ const Order = (props) => {
         return date
     }
 
-    console.log(orders)
     return(
         <div className="w-full h-screen min-h-screen ">
             <div className="fixed flex h-full w-screen -z-5">

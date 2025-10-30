@@ -49,7 +49,6 @@ const ModifyProduct = () => {
             const user = await getUser(currentUserId)
             const prod = await getProductById(prodId)
             const allow = user.data.vendor_profile.id == prod.vendor
-            console.log(prod)
             if(allow){
                 fetchCategories();
                 fetchTags();
@@ -79,8 +78,6 @@ const ModifyProduct = () => {
         authenticate()
     },[])
 
-
-    console.log(images)
     useEffect(() => {        
             const setCategoriesAndTags =() =>{
                 // console.log(tags)

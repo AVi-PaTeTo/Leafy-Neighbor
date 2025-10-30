@@ -18,11 +18,13 @@ const Cart = (props) => {
     const [loading, setLoading] =useState(false)
 
     const navigate = useNavigate()
-    console.log(cartItems)
+
     const fetchCartDetails = async() =>{
             const response = await getUserCart()
-            setCartItems(response[0].items)
-            setCartTotal(response[0].total)
+            if(response[0] != undefined){
+                setCartItems(response[0].items)
+                setCartTotal(response[0].total)
+            } 
             // console.log('fetched')
         }
 
@@ -154,11 +156,11 @@ const Cart = (props) => {
         <div className="relative w-full h-screen min-h-screen ">
             <div className={`transition-all ease-in-out duration-200 fixed inset-0 bg-black/70  px-4 ${loading? 'opacity-100 z-10': 'opacity-0 z-[-10]'}`}>
                 <div className="flex h-full w-full justify-center items-center gap-4 ">
-                    <div class="aspect-square  w-[50px] animate-bouncy bg-gray-200"></div>
-                    <div class="aspect-square  w-[50px] animate-[bouncy_1s_ease-in-out_infinite_150ms] bg-gray-200 delay-100"></div>
-                    <div class="aspect-square  w-[50px] animate-[bouncy_1s_ease-in-out_infinite_250ms] bg-gray-200"></div>
-                    <div class="aspect-square  w-[50px] animate-[bouncy_1s_ease-in-out_infinite_350ms] bg-gray-200"></div>
-                    <div class="aspect-square  w-[50px] animate-[bouncy_1s_ease-in-out_infinite_450ms] bg-gray-200"></div>
+                    <div className="aspect-square  w-[50px] animate-bouncy bg-gray-200"></div>
+                    <div className="aspect-square  w-[50px] animate-[bouncy_1s_ease-in-out_infinite_150ms] bg-gray-200 delay-100"></div>
+                    <div className="aspect-square  w-[50px] animate-[bouncy_1s_ease-in-out_infinite_250ms] bg-gray-200"></div>
+                    <div className="aspect-square  w-[50px] animate-[bouncy_1s_ease-in-out_infinite_350ms] bg-gray-200"></div>
+                    <div className="aspect-square  w-[50px] animate-[bouncy_1s_ease-in-out_infinite_450ms] bg-gray-200"></div>
                 </div>
             </div>
             {popupVisible && <div   onClick={(e) => {if (e.target === e.currentTarget) {setPopupVisible(false);}}}

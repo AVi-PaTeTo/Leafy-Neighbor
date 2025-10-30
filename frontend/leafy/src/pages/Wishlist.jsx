@@ -131,7 +131,6 @@ const Wishlist = (props) => {
     }
 
 
-    console.log(wishlist)
     return(
         <div className="w-full h-full min-h-screen">
             {createPopup && <div    onClick={(e) => {if (e.target === e.currentTarget) {setCreatePopup(false);}}}
