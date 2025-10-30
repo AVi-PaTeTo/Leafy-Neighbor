@@ -7,8 +7,8 @@ import bg from "../assets/sora.png"
 
 const Settings = () =>{
     const navigate = useNavigate()
-    const currentUserId = useUser()['currentUser'] === null? null : useUser()['currentUser'].id
-    const [userData, setUserData] = useState({  'email': '',
+    const {user, setUser} = useUser()
+    const [userData, setUserData] = useState( {  'email': '',
                                                 'pfp':'',
                                                 'id': '',
                                                 'is_vendor': '',
@@ -55,11 +55,6 @@ const Settings = () =>{
     const [passError, setPassError] = useState('')
 
     useEffect(() => {
-        const fetchUserData = async() =>{
-            const response = await getUser(currentUserId)
-            setUserData(response.data)
-        }
-
         const fetchAddresses = async() => {
             const response = await getUserAddress()
             const temp = response.data.map(addr => ({...addr, ['selected']:addr['is_default']}))
@@ -71,11 +66,13 @@ const Settings = () =>{
                 }
             }
         }
-        if (currentUserId != null ){
-        fetchUserData()
-        fetchAddresses()
+        if (user != null && user.id != "" ){
+            fetchAddresses()
         }
-    },[])
+        setUserData(user)
+    },[user])
+
+
 
     useEffect(() =>{
         for (const addr of addresses) {
@@ -196,9 +193,11 @@ const Settings = () =>{
 
         try{
             const response = await saveUserInfo(userData.id, formData)
+            setUser(prev => ({...prev, ...response.data}))
         } catch(error) {
                 console.log(error)
         } finally {
+            
             console.log("Changes Saved.")
         }
 

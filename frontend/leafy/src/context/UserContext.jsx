@@ -1,35 +1,44 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode"
-
+import { getUser } from "../api/ApiFunctions";
 
 const UserContext = createContext();
 
 export const UserProvider = ({children}) => {
-    const [currentUser, setCurrentUser] = useState(() => {
+    const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem('current_user');
     return savedUser ? JSON.parse(savedUser) : null;
     });
 
     useEffect(() => {
-        const initializeUser = () => {
+        const initializeUser = async () => {
             const token = localStorage.getItem('access_token');
             if (token) {
                     try{
                         const decodedToken = jwtDecode(token);
                         if (decodedToken.exp * 1000 < Date.now()) {
                             console.log('Token expired');
-                            setCurrentUser(null);
+                            setUser(null);
                             localStorage.removeItem('access_token');
                             localStorage.removeItem('refresh_token');
                             localStorage.removeItem('current_user');
-                        return;
+                            return;
                             }
-                            setCurrentUser({
-                                id: decodedToken.user_id
-                                            });
+                            
+                        const response = await getUser(decodedToken.user_id);
+                        const userData = response.data;
+
+                        const userWithDefaults = {
+                            ...userData,
+                            pfp: userData.pfp && userData.pfp.trim() !== ""
+                                ? userData.pfp
+                                : "https://i.pinimg.com/736x/2b/72/16/2b7216ec94eaed014688f94bb898c81d.jpg",
+                        };
+
+                            setUser(userWithDefaults);
                         } catch (err) {
                             console.error('Invalid Token:', err);
-                            setCurrentUser(null);
+                            setUser(null);
                             localStorage.removeItem('access_token');
                             localStorage.removeItem('refresh_token');
                             localStorage.removeItem('current_user');
@@ -42,15 +51,15 @@ export const UserProvider = ({children}) => {
 
 
     useEffect(() => {
-        if (currentUser) {
-        localStorage.setItem('current_user', JSON.stringify(currentUser));
+        if (user) {
+        localStorage.setItem('current_user', JSON.stringify(user));
         } else {
         localStorage.removeItem('current_user');
         }
-    }, [currentUser]);
+    }, [user]);
 
     return (
-        <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+        <UserContext.Provider value={{ user, setUser }}>
         {children}
         </UserContext.Provider>
   );

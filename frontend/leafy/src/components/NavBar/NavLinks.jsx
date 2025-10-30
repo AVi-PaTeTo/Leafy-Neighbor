@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { getCategories } from "../../api/ApiFunctions";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
+
 
 const NavLinks = (props) => {
-  const links = ["Home", "Categories", "About", "Contact"];
+  const links = ["Home", "Categories","Vendor", "About", "Contact"];
   const [categoryDropdown, setCategoryDropdown] = useState(false)
   const navigate = useNavigate()
-
+    const {user} = useUser()
 
   const navigationLinks = links.map((link) => {
     if (link === "Categories"){ return(
@@ -25,6 +27,15 @@ const NavLinks = (props) => {
               <svg className={`fill-black ${categoryDropdown?'scale-y-[-1]':''} transition-transform ease-in-out duration-500`} xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
         </li>
       </div>
+      )
+    } else if (link === "Vendor" && user != null && user.is_vendor) {
+      return(
+        <div className="pb-2 group" key={link} onClick={() => navigate(`/vendor/${user.vendor_profile.id}`)}>
+          <li
+            className="transition-transform  duration-100 ease-in-out group-hover:-translate-y-1 group-hover:cursor-pointer group-hover:mb-4  group-hover:border-b-2 border-b-primary"
+            
+          >{link}</li>
+        </div>
       )
     } else {
       return (

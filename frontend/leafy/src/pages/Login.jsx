@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { jwtDecode } from "jwt-decode";
-import { userSignUp } from "../api/ApiFunctions";
+import { userSignUp, getUser } from "../api/ApiFunctions";
 
 const Login = () => {
     const [loginFormData, setLoginFormData] = useState({email:'', password:''})
@@ -13,7 +13,7 @@ const Login = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const {setCurrentUser} = useUser();
+    const {setUser} = useUser();
 
     const disableSignUpButton = signUpFormData.sup_password.length <8 || signUpFormData.sup_password != signUpFormData.sup_confirm_password
 
@@ -34,11 +34,10 @@ const Login = () => {
 
         //Decode the token to get user info
         const decodedToken = jwtDecode(access)
-        const user = {
-            id: decodedToken.user_id
-        }
-
-        setCurrentUser(user);
+        const userId = decodedToken.user_id;
+        
+        const profileResponse = await getUser(userId)
+        setUser(profileResponse.data);
         console.log('Login successful!');
         navigate('/');
         } catch (err) {

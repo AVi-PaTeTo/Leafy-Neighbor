@@ -3,11 +3,12 @@ import Logo from "./Logo"
 import NavIcons from "./NavIcons"
 import NavLinks from "./NavLinks"
 import NavSidebar from "./NavSidebar"
-import { getCategories } from "../../api/ApiFunctions"
+import { getCategories} from "../../api/ApiFunctions"
+
 const Navbar = (props) => {
     const [sidebar, setSidebar] = useState(false)
     const [categories,setCategories] = useState([])
-  
+
     useEffect(() => {        
                 const fetchCategories =async() =>{
                     const response = await getCategories()

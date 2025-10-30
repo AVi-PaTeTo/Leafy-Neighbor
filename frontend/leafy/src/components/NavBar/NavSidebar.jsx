@@ -2,24 +2,14 @@ import { Link } from "react-router-dom"
 import Logo from "./Logo"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { getUser } from "../../api/ApiFunctions"
 import { useUser } from "../../context/UserContext";
 
 const NavSidebar = (props) => {
-    const currentUserId = useUser()['currentUser'] === null? null : useUser()['currentUser'].id
     const [categoryDropdown, setCategoryDropdown] = useState(false)
     const [userDropdown, setUserDropdown] = useState(false)
-    const [userPfp, setUserPfp] = useState()
+    const {user} = useUser()
     const navigate = useNavigate()
-    // console.log(props.categories)
 
-    useEffect(() => {
-        const fetchUserData = async() =>{
-            const response = await getUser(currentUserId)
-            setUserPfp(response.data.pfp)
-        }
-        fetchUserData()
-    },[])
 
     const closeDropdowns = () =>{
         setCategoryDropdown(false)
@@ -27,7 +17,7 @@ const NavSidebar = (props) => {
     }
 
       function logButton(){
-        if(currentUserId!=null){
+        if(user != null && user.id!="" ){
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('current_user');
@@ -35,7 +25,8 @@ const NavSidebar = (props) => {
         }
         navigate('login')
     }
-    // console.log(userPfp)
+
+
     return(
         <div
             onClick={(e) => {if (e.target === e.currentTarget) {props.onClick(false);}}} 
@@ -52,6 +43,14 @@ const NavSidebar = (props) => {
                                 <svg className="h-[24px] w-[24px] shrink-0 flex-none stroke-[1.5px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                                 Home
                             </div>
+
+                            {(user != null && user.is_vendor) && 
+                                <div className="hover:bg-gray-700 relative transition-colors duration-100 ease-in-out pl-8 py-2 w-[236px] rounded-md flex gap-2">
+                                <Link to={`/vendor/${user.vendor_profile.id}`} className="absolute inset-0"></Link>
+                                {/* <svg className="h-[24px] w-[24px] shrink-0 flex-none stroke-[1.5px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> */}
+                                <svg className="h-[24px] w-[24px] shrink-0 flex-none stroke-[1.5px]" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
+                                Vendor
+                            </div>}
 
                             <div> 
                                 <div 
@@ -113,9 +112,9 @@ const NavSidebar = (props) => {
                             <div className="ml-[2px] flex items-center gap-2">
                                 <div className="rounded-[50%] h-[40px] w-[40px] bg-zinc-600 overflow-hidden">
                                     {/* <svg className="fill-white object-cover h-full w-full" xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M355.85-385.33q-22.18 0-37.35-15.32-15.17-15.32-15.17-37.5t15.32-37.35q15.32-15.17 37.5-15.17t37.35 15.32q15.17 15.32 15.17 37.5t-15.32 37.35q-15.32 15.17-37.5 15.17Zm248.67 0q-22.19 0-37.35-15.32Q552-415.97 552-438.15t15.32-37.35q15.31-15.17 37.5-15.17 22.18 0 37.35 15.32 15.16 15.32 15.16 37.5t-15.31 37.35q-15.32 15.17-37.5 15.17ZM480-146.67q139.58 0 236.46-96.96 96.87-96.97 96.87-236.68 0-25.02-3.66-49.19-3.67-24.17-10.34-45.17-20.33 5-42.84 7.17-22.51 2.17-47.16 2.17-95.07 0-179.7-39.67t-144.3-112.33q-33.33 80-95.5 139.5-62.16 59.5-143.16 91.16v6.67q0 139.58 96.87 236.46 96.88 96.87 236.46 96.87ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm-79.33-723Q473.33-711 547-671.5 620.67-632 709.33-632q20.67 0 34.34-1.17 13.66-1.16 29.66-5.16-44-77.34-119.66-126.17Q578-813.33 480-813.33q-22.67 0-43 3.16-20.33 3.17-36.33 7.17ZM158.33-565.67q49-21.66 102.67-79.33t77.33-136.67Q263.33-746 221-690.33q-42.33 55.66-62.67 124.66ZM400.67-803Zm-62.34 21.33Z"/></svg> */}
-                                    <img className="object-cover h-full w-full"  src={userPfp == null || userPfp == ''? 'https://i.pinimg.com/736x/2b/72/16/2b7216ec94eaed014688f94bb898c81d.jpg': userPfp} alt="" />
+                                    <img className="object-cover h-full w-full"  src={user != null && user.pfp != ""? user.pfp : "https://i.pinimg.com/736x/2b/72/16/2b7216ec94eaed014688f94bb898c81d.jpg"} alt="" />
                                 </div>
-                                <h2 className="text-xl font-semibold pt-0.5 text-gray-100">Username</h2>
+                                <h2 className="text-xl font-semibold pt-0.5 text-gray-100">{user != null && user.username != ""? user.username :"Username"}</h2>
                             </div>
                             <svg className="fill-red-500 mr-2" xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#afc35f"><path d="M186.67-120q-27 0-46.84-19.83Q120-159.67 120-186.67v-586.66q0-27 19.83-46.84Q159.67-840 186.67-840h292.66v66.67H186.67v586.66h292.66V-120H186.67Zm470.66-176.67-47-48 102-102H360v-66.66h351l-102-102 47-48 184 184-182.67 182.66Z"/></svg>
                         </div>

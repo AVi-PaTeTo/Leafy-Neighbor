@@ -6,12 +6,12 @@ import { useUser } from "../../context/UserContext";
 
 const NavIcons = (props) => {
   const navigate = useNavigate()
-  const currentUser = useUser().currentUser
+  const { user } = useUser()
   const [icons, setIcons] = useState(iconsData);
   const [userMenu, setUserMenu] = useState(false)
 
   function logButton(){
-    if(currentUser!=null){
+    if(user!=null){
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('current_user');
@@ -62,7 +62,7 @@ const NavIcons = (props) => {
         <Link className="hover:translate-x-2 transition-all ease-in-out duration-50" to={'settings'}>Profile</Link>
         <p className="hover:translate-x-2 hover:cursor-no-drop transition-all ease-in-out duration-50" >Addresses</p>
         <Link className="hover:translate-x-2 transition-all ease-in-out duration-50 " to={'orders'}>Your Orders</Link>
-        <p onClick={() => logButton()} className="hover:translate-x-2 hover:cursor-pointer transition-all ease-in-out duration-50" >{currentUser!=null? 'Log out':'Log In'}</p>
+        <p onClick={() => logButton()} className="hover:translate-x-2 hover:cursor-pointer transition-all ease-in-out duration-50" >{user!=null? 'Log out':'Log In'}</p>
       </div>
     </div>
   </section>  

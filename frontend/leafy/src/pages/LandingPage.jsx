@@ -4,7 +4,6 @@ import Navbar from "../components/NavBar/Navbar"
 import Logo from "../components/NavBar/Logo";
 import Showcase from "../components/Showcase/Showcase";
 import Carousel from "../components/Testimonial/Carousel";
-import { useUser } from "../context/UserContext";
 
 const LandingPage = () => {
 
