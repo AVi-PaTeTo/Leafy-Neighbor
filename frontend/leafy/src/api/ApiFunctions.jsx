@@ -43,7 +43,7 @@ export const getUserCart = async() => {
 
 export const addToCart = async(data) => {
     const response = await API.post(`/cart-items/`, data)
-    return response.data
+    return response
 }
 
 export const updateQuant = async(id,data) => {

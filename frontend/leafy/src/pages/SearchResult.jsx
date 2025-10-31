@@ -11,7 +11,7 @@ import StarRating from "../components/Reviews/StarRating"
 const SearchResult = (props) => {
     const location = useLocation()
     const navigate = useNavigate();
-    const { currentUser } = useUser();
+    const { user } = useUser();
     const [categories, setCategories] = useState([])
     const [queryTerm, setQueryTerm] = useState('')
     const [prodData, setProdData] = useState()
@@ -79,8 +79,9 @@ const SearchResult = (props) => {
                 }
                 };
             fetchCategories();
-            // fetchProds();
-            refreshWishlists();
+            if(user != null) {
+                refreshWishlists();
+            }
             
         }, []);
 
@@ -118,17 +119,31 @@ const SearchResult = (props) => {
         formData.append('product', id)
         formData.append('quantity', 1)
 
-        if(currentUser === null){
-            navigate('/user')
+        if(user === null){
+            alert("You need to login to do that.")
+            return
         }
         try {
-            const response = await addToCart(formData); 
-            console.log(response)
+            const response = await addToCart(formData);
+            if(response.status === 201){
+                console.log("Item added to the cart.")
+            }
             } catch (error) {
-                console.error(error);
+                if(error.status === 500){
+                    alert("Can't add duplicates.")
+                };
             }       
         };
     
+    const heartButton = (id) =>{
+        if(user === null){
+            alert("You need to login to do that.")
+            return
+        }
+        setPopupOpen(true)
+        setItemToAdd(id)
+    }
+
     const applyOrdering = () => {
         if (filterParams) {
             // Remove any existing &ordering=... from the string
@@ -200,8 +215,7 @@ const SearchResult = (props) => {
                     <div className="grid auto-rows-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 gap-y-10 px-4">
                         {prodData !== undefined && prodData.map((prod) => {return(
                             <div key={prod.id} className="relative shadow-lg bg-zinc-800 rounded-md flex flex-col w-full h-full flex-1">
-                                    <button id={prod.id} onClick={(e) => {setPopupOpen(true)
-                                                                    setItemToAdd(e.currentTarget.id)}} 
+                                    <button id={prod.id} onClick={(e) => heartButton(e.currentTarget.id)} 
                                                         className="absolute z-10 right-0 bg-white m-2 p-1.5 flex items-center justify-end rounded-4xl">
                                         <svg className="fill-zinc-400 hover:fill-red-500 z-5" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 16"><path d="M8.695 16.682C4.06 12.382 1 9.536 1 6.065 1 3.219 3.178 1 5.95 1c1.566 0 3.069.746 4.05 1.915C10.981 1.745 12.484 1 14.05 1 16.822 1 19 3.22 19 6.065c0 3.471-3.06 6.316-7.695 10.617L10 17.897l-1.305-1.215z" opacity=".9"></path></svg>
                                     </button>

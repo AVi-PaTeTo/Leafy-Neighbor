@@ -2,11 +2,12 @@ import { useState, useEffect } from "react"
 import { getProducts, getVendorProfile, patchVendorProfile, deleteProduct } from "../api/ApiFunctions"
 import { useNavigate, useLocation, useParams, resolvePath, Link } from "react-router-dom"
 import StarRating from "../components/Reviews/StarRating"
-
+import { useUser } from "../context/UserContext"
 
 const VendorProfile = () => {
         const navigate = useNavigate()
         const { vendorId } = useParams();
+        const {user} = useUser()
         // const vendorId = location.state?.vendorId;
         const [pfp, setPfp] = useState('https://i.pinimg.com/736x/d2/c0/08/d2c00886ae6f6cd0c88ee864d1023b59.jpg')
         const [vendorDetails, setVendorDetails] = useState({

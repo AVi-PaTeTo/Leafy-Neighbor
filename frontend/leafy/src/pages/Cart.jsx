@@ -3,7 +3,7 @@ import bg from "../assets/b5.png"
 import { useEffect,useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserCart, updateQuant, removeItem, createOrder, razorDetails } from "../api/ApiFunctions";
-
+import { useUser } from "../context/UserContext";
 import API from "../api/axios";
 
 const BG_IMG = "https://videos.openai.com/vg-assets/assets%2Ftask_01k13mvb1kf9187sd0y08kqcq5%2F1753542958_img_1.webp?st=2025-07-26T13%3A50%3A10Z&se=2025-08-01T14%3A50%3A10Z&sks=b&skt=2025-07-26T13%3A50%3A10Z&ske=2025-08-01T14%3A50%3A10Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=3d249c53-07fa-4ba4-9b65-0bf8eb4ea46a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=JRMjxUEoDdMm6SfRrwQS2knf7tUTUlRIOLU5%2BfAzITU%3D&az=oaivgprodscus"
@@ -16,20 +16,23 @@ const Cart = (props) => {
     const [popupMessage, setPopupMessage] = useState('')
     const [itemToRemove, setItemToRemove] = useState(null)
     const [loading, setLoading] =useState(false)
-
+    const {user} = useUser()
     const navigate = useNavigate()
 
-    const fetchCartDetails = async() =>{
+
+
+    useEffect(()=>{
+        const fetchCartDetails = async() =>{
             const response = await getUserCart()
             if(response[0] != undefined){
                 setCartItems(response[0].items)
                 setCartTotal(response[0].total)
             } 
-            // console.log('fetched')
         }
+        if (user !=null){
 
-    useEffect(()=>{
-        fetchCartDetails()
+            fetchCartDetails()
+        }
     },[])
     
     const increaseQuant = async(id) => {

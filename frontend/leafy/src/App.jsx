@@ -22,6 +22,7 @@ const Settings = lazy(() => import('./pages/Settings'));
 const Vendor = lazy(() => import('./pages/VendorProfile'))
 const Modify = lazy(() => import('./pages/ModifyProduct'))
 const Contact = lazy(() => import('./pages/Contact'))
+const About = lazy(() => import('./pages/About'))
 
 function App() {
   const [hide, setHide] = useState(false)
@@ -93,6 +94,7 @@ function App() {
         <Suspense fallback={<div className="text-center mt-20">Loading...</div>}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/about" element={<About />} />
             {/* <Route path="/categories" element={<Order hide={hide}/>} /> */}
             <Route path="/create" element={<Create />} />
             <Route path="/browse/" element={<SearchResult hide={hide} search={searchParameter} />} />

@@ -7,8 +7,10 @@ import ImageSection from "../components/ProductDetails/ImageSection"
 import Review from "./Review"
 import StarRating from "../components/Reviews/StarRating"
 import SimplePopup from "../components/Wishlist/WishlistPopup"
+import { useUser } from "../context/UserContext"
 
 const ProductDetail = () => {
+    const {user} = useUser()
     const { prodName } = useParams();
     const location = useLocation();
     const id = location.state?.id;
@@ -55,7 +57,9 @@ const ProductDetail = () => {
                             }
                         }
         }
-        refreshWishlists()
+        if(user != null){
+            refreshWishlists()
+        }
     },[])
 
     useEffect(() => {
@@ -82,17 +86,22 @@ const ProductDetail = () => {
     }
 
     const addToCartButton = async() => {
-                const formData = new FormData();
-                formData.append('product', id)
-                formData.append('quantity', quant)
-        
-                
-                try {
-                    const response = await addToCart(formData); 
-                    } catch (error) {
-                        console.error(error);
-                    }       
-                };
+
+            const formData = new FormData();
+            formData.append('product', id)
+            formData.append('quantity', quant)
+    
+            
+            try {
+                if(user == null){
+                    alert("You need to login first.")
+                    return
+                }
+                const response = await addToCart(formData); 
+                } catch (error) {
+                    console.error(error);
+                }       
+            };
 
     function toTitleCase(str) {
         return str
@@ -190,8 +199,15 @@ const ProductDetail = () => {
                                         </button>
                                     </div>
                                 </div>
-                                <button onClick={() => addToCartButton} className="py-4 bg bg-primary rounded-lg font-bold text-xl  hover:cursor-pointer">Add to Cart</button>
-                                <button onClick={() => setWishlistPopUpOpen(true)} className="py-4 outline-1 outline-black/40 rounded-lg font-bold text-xl hover:cursor-pointer">Add to Wishlist</button>
+                                <button onClick={() => addToCartButton()} className="py-4 bg bg-primary rounded-lg font-bold text-xl  hover:cursor-pointer">Add to Cart</button>
+                                <button 
+                                        onClick={() => {
+                                            if(user == null){
+                                                alert("You need to login first.")
+                                                return
+                                            }
+                                            setWishlistPopUpOpen(true)}} 
+                                        className="py-4 outline-1 outline-black/40 rounded-lg font-bold text-xl hover:cursor-pointer">Add to Wishlist</button>
                             </div>
                             <h2 className="font-bold text-3xl">Product Details</h2>
                             <hr className="text-black/30 pb-4" />

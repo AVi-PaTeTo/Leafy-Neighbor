@@ -3,7 +3,7 @@ import bg from "../assets/b5.png"
 import { getWishlist, createWishlist, deleteWishlist, deleteFromWishlist, addToCart } from "../api/ApiFunctions";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useUser } from "../context/UserContext";
 
 const Wishlist = (props) => {
     const [wishlist, setWishlist] = useState([])
@@ -11,6 +11,7 @@ const Wishlist = (props) => {
     const [deletePopup, setDeletePopup] = useState(false)
     const [wishlistName, setWishlistName ]= useState('')
     const [toDelete, setToDelete] = useState(null)
+    const {user} = useUser()
 
     const refreshWishlists= async() =>{
             const response = await getWishlist()
@@ -20,7 +21,10 @@ const Wishlist = (props) => {
     const navigate = useNavigate()
     
     useEffect(()=>{
-        refreshWishlists()
+        if (user != null){
+
+            refreshWishlists()
+        }
     },[])
 
     useEffect(() => {

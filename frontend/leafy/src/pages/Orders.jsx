@@ -3,8 +3,7 @@ import bg from "../assets/b5.png"
 import { getOrders } from "../api/ApiFunctions";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-
+import { useUser } from "../context/UserContext";
 const BG_IMG = "https://videos.openai.com/vg-assets/assets%2Ftask_01k13mvb1kf9187sd0y08kqcq5%2F1753542958_img_1.webp?st=2025-07-26T13%3A50%3A10Z&se=2025-08-01T14%3A50%3A10Z&sks=b&skt=2025-07-26T13%3A50%3A10Z&ske=2025-08-01T14%3A50%3A10Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=3d249c53-07fa-4ba4-9b65-0bf8eb4ea46a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=JRMjxUEoDdMm6SfRrwQS2knf7tUTUlRIOLU5%2BfAzITU%3D&az=oaivgprodscus"
 
 
@@ -49,13 +48,17 @@ const status = {
 const Order = (props) => {
     const navigate = useNavigate()
     const [orders, setOrders] = useState()
+    const {user} = useUser()
 
+    console.log(orders)
     useEffect(()=>{
         const fetchOrders = async() =>{
             const response = await getOrders()
             setOrders(response.data)
+        }        
+        if (user !=null){
+            fetchOrders()
         }
-        fetchOrders()
     },[])
 
     const formatDate = (string) => {
@@ -101,9 +104,6 @@ const Order = (props) => {
                                                 <img className="h-[70%] object-cover self-start rounded-tl-md" src={order.order_items[0].product_image} alt="" />
                                                 <div className="h-[30%] items-center flex p-2 text-gray-100 bg-zinc-800 rounded-bl-md ">
                                                     <h2 className=" text-[1.1rem] flex-1 pt-1">{status[order.status].title}</h2>
-                                                    {/* <svg className=" w-6 h-6 flex-none shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-icon lucide-loader"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg> */}
-                                                    {/* <svg className=" w-6 h-6 flex-none shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-waypoints-icon lucide-waypoints"><circle cx="12" cy="4.5" r="2.5"/><path d="m10.2 6.3-3.9 3.9"/><circle cx="4.5" cy="12" r="2.5"/><path d="M7 12h10"/><circle cx="19.5" cy="12" r="2.5"/><path d="m13.8 17.7 3.9-3.9"/><circle cx="12" cy="19.5" r="2.5"/></svg> */}
-                                                    {/* <svg className=" w-6 h-6 flex-none shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck-icon lucide-truck"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg> */}
                                                     {status[order.status].icon}
                                                 </div>
                                             </span>
@@ -119,10 +119,6 @@ const Order = (props) => {
                                                             <p className="font-semibold text-[1.1rem]">{formatDate(order.created_at)}</p>
                                                         </div>
                                                     </div>
-                                                    {/* <div className="flex justify-between flex-col sm:flex-row sm:gap-4">
-                                                        <p className="text-[0.9rem] align-sub pt-1">Payment: </p>
-                                                        <p className="font-semibold text-[1.1rem]">Pending</p>
-                                                    </div> */}
                                                     <div className="flex justify-between flex-col sm:flex-row sm:gap-4">
                                                         <p className="text-[0.9rem] align-sub pt-2">Total: </p>
                                                         <p className="font-semibold text-[1.3rem]">₹{order.total}</p>
