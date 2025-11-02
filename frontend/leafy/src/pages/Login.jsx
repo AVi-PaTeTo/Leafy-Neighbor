@@ -110,8 +110,9 @@ const Login = () => {
                             <p>or sign in with</p>
 
                             <div className="flex w-full justify-evenly mt-6">
-                                <a className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="">
+                                <div className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="">
                                     <svg className="stroke-text stroke-1 fill-transparent h-6 w-6 sm:h-8 sm:w-8" xmlns="http://www.w3.org/2000/svg" width="32" height="32" enableBackground="new 0 0 32 32" viewBox="0 0 32 32" id="google">
+                                        <title>feature for the future</title>
                                         <path fill="#263238" d="M16.33,31c-5.777,0-10.942-3.203-13.481-8.358C1.828,20.565,1.31,18.331,1.31,16
                                                 c0-2.333,0.518-4.569,1.54-6.644C5.388,4.202,10.553,1,16.33,1c3.66,0,7.083,1.296,9.898,3.748c0.105,0.091,0.167,0.221,0.171,0.36
                                                 c0.005,0.139-0.048,0.273-0.146,0.371L22.03,9.697c-0.182,0.181-0.472,0.195-0.67,0.033c-1.44-1.177-3.18-1.799-5.03-1.799
@@ -127,15 +128,19 @@ const Login = () => {
                                                 C23.528,29.669,20.048,31,16.33,31z"></path>
                                     </svg>
                                     
-                                </a>
+                                </div>
 
-                                <a className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="">
-                                    <svg className="stroke-1.5  h-6 w-6 sm:h-8 sm:w-8" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                                </a>
+                                <div className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="">
+                                    <svg className="stroke-1.5  h-6 w-6 sm:h-8 sm:w-8" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                                    <title>feature for the future</title>
+                                    </svg>
+                                </div>
                                 
-                                <a className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="">
-                                    <svg className="stroke-1.5 h-6 w-6 sm:h-8 sm:w-8" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" ><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-                                </a>
+                                <div className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="">
+                                    <svg className="stroke-1.5 h-6 w-6 sm:h-8 sm:w-8" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" ><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                                    <title>feature for the future</title>
+                                    </svg>
+                                </div>
                             </div>
 
                             <p className="mt-auto">

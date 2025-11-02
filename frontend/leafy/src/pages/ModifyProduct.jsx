@@ -9,7 +9,7 @@ const ModifyProduct = () => {
     const PLANT_CARE_ID = 13;
 
     const {prodId} = useParams();
-    const currentUserId = useUser()['currentUser'] === null? null : useUser()['currentUser'].id
+    const {user} = useUser();
 
     const [categories, setCategories] = useState([])
     const [tags, setTags] = useState([])
@@ -46,9 +46,8 @@ const ModifyProduct = () => {
             }
 
         const authenticate = async() => {
-            const user = await getUser(currentUserId)
             const prod = await getProductById(prodId)
-            const allow = user.data.vendor_profile.id == prod.vendor
+            const allow = user.vendor_profile.id == prod.vendor
             if(allow){
                 fetchCategories();
                 fetchTags();
