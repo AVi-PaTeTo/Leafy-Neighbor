@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { jwtDecode } from "jwt-decode";
-import { userSignUp, getUser } from "../api/ApiFunctions";
+import { login, userSignUp, getUser } from "../api/ApiFunctions";
 
 const Login = () => {
     const [loginFormData, setLoginFormData] = useState({email:'', password:''})
@@ -23,7 +23,7 @@ const Login = () => {
         setError(null);
 
         try {
-        const response = await axios.post("http://localhost:8000/api/token/", json);
+        const response = await login(json);
         
         const { access, refresh } = response.data;
 

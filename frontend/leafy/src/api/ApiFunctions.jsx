@@ -1,5 +1,10 @@
 import API from "./axios";
 
+//Login
+export const login = async(json) => {
+    const response = await API.post('/token/', json)
+    return response
+}
 
 // Product
 
