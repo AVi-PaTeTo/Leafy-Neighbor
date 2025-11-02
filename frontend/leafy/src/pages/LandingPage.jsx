@@ -6,6 +6,7 @@ import Showcase from "../components/Showcase/Showcase";
 import Carousel from "../components/Testimonial/Carousel";
 
 const LandingPage = () => {
+  console.log("API Base URL:", import.meta.env.VITE_API_URL);
 
   return (
     <div className="relative w-full bg-primary">
