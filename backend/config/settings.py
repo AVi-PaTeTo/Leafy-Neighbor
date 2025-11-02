@@ -124,7 +124,17 @@ DATABASES = {
     'default': env.db('DATABASE_URL', default='postgres://leafy_user:leafy_password@db:5432/leafy_db')
 }
 
-
+# TO RUN LOCALLY
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DATABASE_NAME'),
+#         'USER': env('DATABASE_USER'),
+#         'PASSWORD': env('DATABASE_PASSWORD'),
+#         'HOST': env('DATABASE_HOST'),  # should be 'db'
+#         'PORT': env('DATABASE_PORT'),
+#     }
+# }
 
 
 # Password validation
