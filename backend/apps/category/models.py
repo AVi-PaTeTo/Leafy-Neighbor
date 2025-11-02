@@ -26,6 +26,6 @@ class Tag(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            raw_slug = f"{self.tag_group.name.replace(" ","_")}_{self.name}"
+            raw_slug = f"{self.tag_group.name.replace(' ','_')}_{self.name}"
             self.slug = slugify(raw_slug)
         super().save(*args, **kwargs)

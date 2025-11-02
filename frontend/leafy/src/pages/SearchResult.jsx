@@ -23,14 +23,7 @@ const SearchResult = (props) => {
     const [filterParams, setFilterParams] = useState(null)
     const [sortPopUp, setSortPopUp] = useState(false)
     const [ordering, setOrdering] = useState('')
-    const sortParams = {
-        priceLow: 'price',
-        priceHigh: '-price',
-        reviewsLow: 'reviews',
-        reviewsHigh: '-reviews',
-        priceLow: 'price',
-        priceHigh: '-price'
-    }
+
     
 
     function handleCardClick(id,prodName){

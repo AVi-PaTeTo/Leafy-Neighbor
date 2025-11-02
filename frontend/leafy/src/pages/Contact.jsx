@@ -7,7 +7,7 @@ const Contact = () => {
                 <div className="absolute inset-0 bg-zinc-800/20"></div>
                 <img className="h-full w-full object-cover object-left" src={"https://images.pexels.com/photos/2933470/palm-leaf-leaves-black-and-white-2933470.jpeg"} alt="" />
             </div>
-            <div className="bg-gradient-to-br from-zinc-900 to-[#101013] backdrop-blur-[4px] p-4 mt-16 rounded-lg shadow-lg ">
+            <div className="bg-gradient-to-br to-zinc-900/98 from-[#101013] backdrop-blur-[4px] p-4 mt-16 rounded-lg shadow-lg ">
                 <h1 className="text-3xl font-bold mb-4 text-zinc-100">Contact the Developer</h1>
                 <p className="mb-6 text-zinc-100">
                     This e-commerce project is a technical showcase built by me, using Django, React, PostgreSQL, and Tailwind. I welcome feedback, questions, and networking opportunities!

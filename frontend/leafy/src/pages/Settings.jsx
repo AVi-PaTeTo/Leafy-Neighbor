@@ -10,7 +10,6 @@ const Settings = () =>{
     const {user, setUser} = useUser()
     const [userData, setUserData] = useState( {  'email': '',
                                                 'pfp':'',
-                                                'id': '',
                                                 'is_vendor': '',
                                                 'phone_number': '',
                                                 'username': '',
@@ -55,22 +54,35 @@ const Settings = () =>{
     const [passError, setPassError] = useState('')
 
     useEffect(() => {
-        const fetchAddresses = async() => {
-            const response = await getUserAddress()
-            const temp = response.data.map(addr => ({...addr, ['selected']:addr['is_default']}))
-            setAddresses(temp)
-            for (const addr of response.data) {
-                if(addr['is_default'] == true){
-                    setDefAddress(addr)
-                    setTempNewDefAddr(addr)
+        if (!user || !user.id) {
+            alert("Please log in first.")
+            navigate("/login");
+            return;
+        }
+
+        const fetchAddresses = async () => {
+            try {
+                const response = await getUserAddress();
+                const temp = response.data.map(addr => ({
+                    ...addr,
+                    selected: addr.is_default,
+                }));
+                setAddresses(temp);
+
+                const defaultAddr = response.data.find(addr => addr.is_default);
+                if (defaultAddr) {
+                    setDefAddress(defaultAddr);
+                    setTempNewDefAddr(defaultAddr);
                 }
+            } catch (err) {
+                console.error("Error fetching addresses:", err);
             }
-        }
-        if (user != null && user.id != "" ){
-            fetchAddresses()
-        }
-        setUserData(user)
-    },[user])
+        };
+
+        fetchAddresses();
+        setUserData(user);
+    }, [user, navigate]);
+
 
 
 
@@ -225,6 +237,7 @@ const Settings = () =>{
         if(!userData.is_vendor){
 
             const response = await becomeVendor(userData.id)
+            setUser(prev => ({...prev,is_vendor:true, vendor_profile:response.data.vendor_profile}))
             navigate(`/vendor/${response.data.vendor_profile.id}`)
         } else {
             navigate(`/vendor/${userData.vendor_profile.id}`)
@@ -376,19 +389,19 @@ const Settings = () =>{
             <div className="mt-22 flex flex-col items-center gap-4">
                 <div className="relative flex justify-center max-w-[600px] w-full">
                     <div className="mt-22 w-full h-fit min-h-[150px] flex justify-center bg-zinc-200 rounded-2xl mx-2 shadow-md">
-                        <h1 className="pt-21 text-3xl font-semibold tracking-wider">Hi, {userData['username']==""?"User":toTitleCase(userData['username'])}</h1>
+                        <h1 className="pt-21 text-3xl font-semibold tracking-wider">Hi, {user==null || userData.username == "" ?"User":toTitleCase(userData['username'])}</h1>
                     </div>
                     <div
                         onClick={() => setPfpPopup(true)}
                         className="absolute w-36 h-36 bg-black/20 rounded-[50%] overflow-hidden shadow-lg group">
-                        <img className="z-1" src={(userData.pfp == null || userData.pfp == '') || userData == undefined? 'https://i.pinimg.com/736x/2b/72/16/2b7216ec94eaed014688f94bb898c81d.jpg': userData.pfp} alt="" />
+                        <img className="z-1" src={(userData.pfp == null || userData.pfp == '') || user == null? 'https://i.pinimg.com/736x/2b/72/16/2b7216ec94eaed014688f94bb898c81d.jpg': userData.pfp} alt="" />
                         <div className="absolute w-full bottom-[-40px] group-hover:bottom-[0px] text-center z-5 bg-black/50 text-white font-bold tracking-wide py-2 transition-all duration-200 ease-in-out">Edit</div>
                     </div>
                 </div>
 
                 <div className="flex justify-center max-w-[600px] w-full">
                     <div className="bg-zinc-200 w-full rounded-2xl mx-2 shadow-md flex gap-4 justify-center px-8 py-4">
-                        <p className="pt-1">{userData.is_vendor?'Vendor account active.':'Got a business?'}</p>
+                        <p className="pt-1">{user !== null && userData.is_vendor?'Vendor account active.':'Got a business?'}</p>
                         <button
                             className="py-1 px-3 bg-primary shadow-sm rounded-sm font-semibold hover:cursor-pointer"
                             disabled={userData.is_vendor === ""}
