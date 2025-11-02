@@ -1,27 +1,26 @@
+# Use an official Python image
 FROM python:3.11-slim
-
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
 
 # Set work directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Prevent Python from writing pyc files and buffering logs
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# Install Python dependencies
+# Install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
 COPY . .
 
-# Expose the app port
+# Expose the port Render will use
 EXPOSE 8000
 
-# Run Django
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Run migrations, collectstatic, and start Gunicorn
+CMD sh -c "python manage.py migrate && \
+           python manage.py collectstatic --noinput && \
+           python manage.py shell < create_superuser.py && \
+           gunicorn config.wsgi:application --bind 0.0.0.0:8000"
+
