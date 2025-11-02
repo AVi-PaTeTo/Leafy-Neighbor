@@ -26,6 +26,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,7 +48,6 @@ INSTALLED_APPS = [
 
     "rest_framework",
     'django_filters',
-    'corsheaders',
     #profiling
     'silk',
 
@@ -182,19 +183,34 @@ STATIC_ROOT = os.path.join(BASE_DIR,"static")
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 MEDIA_URL = '/media/'
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     "http://localhost:8080",
-#     "http://127.0.0.1:8000"  # React frontend
-# ]
-CORS_ALLOW_ALL_ORIGINS = False  # safer in production
+CORS_ALLOW_ALL_ORIGINS = True  # safer in production
 CORS_ALLOWED_ORIGINS = [
+    "https://leafy-neighbor.vercel.app",
     "http://localhost:5173",
     "https://leafy-frontend.onrender.com",
-    "https://leafy-neighbor.vercel.app",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
 
 RAZORPAY_KEY_ID = env('RAZORPAY_KEY_ID')
 RAZORPAY_KEY_SECRET = env('RAZORPAY_KEY_SECRET')
