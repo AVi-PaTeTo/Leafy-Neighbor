@@ -7,6 +7,7 @@ import { useUser } from "../context/UserContext";
 import SimplePopup from "../components/Wishlist/WishlistPopup"
 import SideBar from "../components/Filter/SideBar"
 import StarRating from "../components/Reviews/StarRating"
+import Footer from "../components/Footer";
 
 const SearchResult = (props) => {
     const location = useLocation()
@@ -246,11 +247,7 @@ const SearchResult = (props) => {
                 </div>
             </div>
 
-            <section className="w-full h-fit bg-gray-100 ">
-                <div className="h-[340px] bg-black/80 flex items-center justify-center">
-                    <p className="text-xl font-semibold">Footer</p>
-                </div>
-            </section> 
+        <Footer /> 
         </div>
     )
 }

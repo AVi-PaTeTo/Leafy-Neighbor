@@ -4,6 +4,7 @@ import { getWishlist, createWishlist, deleteWishlist, deleteFromWishlist, addToC
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
+import Footer from "../components/Footer";
 
 const Wishlist = (props) => {
     const [wishlist, setWishlist] = useState([])
@@ -230,6 +231,8 @@ const Wishlist = (props) => {
                     </div>
                 </div>
             </div>
+                  <Footer />
+                  
         </div>
     );
 };

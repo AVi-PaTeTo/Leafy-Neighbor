@@ -4,6 +4,8 @@ import { getOrders } from "../api/ApiFunctions";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
+import Footer from "../components/Footer";
+
 const BG_IMG = "https://videos.openai.com/vg-assets/assets%2Ftask_01k13mvb1kf9187sd0y08kqcq5%2F1753542958_img_1.webp?st=2025-07-26T13%3A50%3A10Z&se=2025-08-01T14%3A50%3A10Z&sks=b&skt=2025-07-26T13%3A50%3A10Z&ske=2025-08-01T14%3A50%3A10Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=3d249c53-07fa-4ba4-9b65-0bf8eb4ea46a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=JRMjxUEoDdMm6SfRrwQS2knf7tUTUlRIOLU5%2BfAzITU%3D&az=oaivgprodscus"
 
 
@@ -72,14 +74,7 @@ const Order = (props) => {
                 <img className="h-full w-full object-cover object-right" src={bg} alt="" />
             </div>
             <div className="flex justify-center mt-16 md:mt-16 h-screen min-h-fit max-h-[calc(100vh-5.5rem)] w-full px-2 py-8">
-                {/* <div className="bg-accent w-full h-[200px]">
-                <svg className="stroke-2 stroke-white w-6 h-6 flex-none shrink-0" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" ><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
 
-                <svg className="stroke-2 stroke-white w-6 h-6 flex-none shrink-0" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" ><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-                
-                
-                </div>                 */}
-                {/* wishlisht display area  OR wrapper*/}
                 <div className="max-w-[800px] bg-gray-200/20 shadow-2xl backdrop-blur-[4px] relative w-full min-h-full h-fit rounded-lg ">
                     
                     {/* wishlist create button */}
@@ -143,11 +138,9 @@ const Order = (props) => {
                 </div>
             </div>
             
-            <section className="w-full h-fit bg-gray-100 z-2">
-                <div className="h-[340px] bg-black/80 flex items-center justify-center">
-                <p className=" font-semibold">Footer</p>
-                </div>
-            </section>  
+            
+                <Footer />
+                
         </div>
     );
 };

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getUserCart, updateQuant, removeItem, createOrder, razorDetails } from "../api/ApiFunctions";
 import { useUser } from "../context/UserContext";
 import API from "../api/axios";
+import Footer from "../components/Footer";
 
 const BG_IMG = "https://videos.openai.com/vg-assets/assets%2Ftask_01k13mvb1kf9187sd0y08kqcq5%2F1753542958_img_1.webp?st=2025-07-26T13%3A50%3A10Z&se=2025-08-01T14%3A50%3A10Z&sks=b&skt=2025-07-26T13%3A50%3A10Z&ske=2025-08-01T14%3A50%3A10Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=3d249c53-07fa-4ba4-9b65-0bf8eb4ea46a&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=JRMjxUEoDdMm6SfRrwQS2knf7tUTUlRIOLU5%2BfAzITU%3D&az=oaivgprodscus"
 
@@ -261,11 +262,7 @@ const Cart = (props) => {
                 </div>
             </div>
             
-            <section className="w-full h-fit bg-gray-100 z-2">
-                <div className="h-[340px] bg-black/80 flex items-center justify-center">
-                <p className="text-xl font-semibold">Footer</p>
-                </div>
-            </section>  
+        <Footer /> 
         </div>
     );
 };

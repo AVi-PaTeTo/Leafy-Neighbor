@@ -14,33 +14,33 @@ import { useNavigate } from "react-router-dom";
 const cards = [
 
   {
-    id:9,
+    id:2,
     title: "Outdoor Plants",
     desc:
       "Tough enough to brave the outdoors, yet charming enough to welcome in.",
     img: mobileOutdoor,
   },
   {
-    id:11,
+    id:4,
     title: "Flowering Plants",
     desc:
       "A pop of color and a breath of fragrance, all in one lovely bloom.",
     img: mobileFlower,
   },
   {
-    id:10,
+    id:3,
     title: "Succulents",
     desc: "Low effort, high charm. Perfect for forgetful friends.",
     img: mobileSucculents,
   },
   {
-    id:13,
+    id:6,
     title: "Plant Care",
     desc: "Everything you need to pamper your leafy companions.",
     img: mobileTools,
   },
   {
-    id:14,
+    id:7,
     title: "Hanging Plants",
     desc: "Take your plant obsession to new heights—literally.",
     img: mobileHanging,
@@ -96,7 +96,7 @@ const Showcase = () => {
           src={outdoorPlants}
           alt=""
         />
-        <div onClick={()=>navigate(`/browse?category=${9}`)} className="absolute inset-0"></div>
+        <div onClick={()=>navigate(`/browse?category=${2}`)} className="absolute inset-0"></div>
         <div className="absolute rounded-md inset-0 text-text flex flex-col items-baseline justify-end px-8 py-12 gap-1.5">
           <h2 className="text-3xl font-bold">Outdoor Plants</h2>
           <p className="font-light text-[1.1rem]">
@@ -114,7 +114,7 @@ const Showcase = () => {
           src={floweringPlants}
           alt=""
         />
-        <div onClick={()=>navigate(`/browse?category=${11}`)} className="absolute inset-0"></div>
+        <div onClick={()=>navigate(`/browse?category=${4}`)} className="absolute inset-0"></div>
         <div className="absolute rounded-md h-full w-[50%] left-0 text-text flex flex-col items-start justify-center px-8 py-12">
           <h2 className="text-3xl font-bold">Flowering Plants</h2>
           <p className="font-light text-[1.1rem]">
@@ -136,7 +136,7 @@ const Showcase = () => {
           src={succulents}
           alt=""
         />
-        <div onClick={()=>navigate(`/browse?category=${10}`)} className="absolute inset-0"></div>
+        <div onClick={()=>navigate(`/browse?category=${3}`)} className="absolute inset-0"></div>
         <div className="absolute rounded-md h-full w-[60%] right-0 text-text flex flex-col items-start justify-center px-8 py-12">
           <h2 className="text-3xl font-bold">Succulents</h2>
           <p className="font-light text-[1.1rem]">
@@ -154,7 +154,7 @@ const Showcase = () => {
           src={plantCare}
           alt=""
         />
-        <div onClick={()=>navigate(`/browse?category=${13}`)} className="absolute inset-0"></div>
+        <div onClick={()=>navigate(`/browse?category=${6}`)} className="absolute inset-0"></div>
         <div className="absolute rounded-md h-full w-[50%] left-0 text-text flex flex-col items-start justify-center px-8 py-12">
           <h2 className="text-3xl font-bold">Plant Care</h2>
           <p className="font-light text-[1.1rem]">
@@ -172,7 +172,7 @@ const Showcase = () => {
           src={hangingPlants}
           alt=""
         />
-        <div onClick={()=>navigate(`/browse?category=${14}`)} className="absolute inset-0"></div>
+        <div onClick={()=>navigate(`/browse?category=${7}`)} className="absolute inset-0"></div>
         <div className="absolute rounded-md lg:bottom-0 h-full xl:w-[50%] right-0 text-text flex flex-col lg:items-baseline lg:justify-end xl:items-start xl:justify-center px-8 py-12">
           <h2 className="text-3xl font-bold">Hanging Plants</h2>
           <p className="font-light text-[1.1rem]">

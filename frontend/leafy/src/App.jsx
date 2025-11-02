@@ -68,8 +68,8 @@ function App() {
     }
     setSearchParameter(searchParam.toString())
     if(nav){
-      if(!/^\/about/.test(location.pathname)){
-        navigate('about')
+      if(!/^\/browse/.test(location.pathname)){
+        navigate('browse')
       }
     }
   }

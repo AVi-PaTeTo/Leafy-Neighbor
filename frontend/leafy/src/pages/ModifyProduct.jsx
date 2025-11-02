@@ -6,7 +6,7 @@ import { patchProduct, getProductById, getCategories, getTags, getUser } from ".
 import { useParams } from "react-router-dom";
 
 const ModifyProduct = () => {
-    const PLANT_CARE_ID = 13;
+    const PLANT_CARE_ID = 6;
 
     const {prodId} = useParams();
     const {user} = useUser();
@@ -202,7 +202,7 @@ const ModifyProduct = () => {
             return []; // skip any unexpected value types
             });
         
-        const finalTags = selectedCategories.includes(13)? []:allTagIds
+        const finalTags = selectedCategories.includes(PLANT_CARE_ID)? []:allTagIds
         
         for (const tag of finalTags) {
             formData.append('tags', tag)
@@ -427,7 +427,7 @@ const ModifyProduct = () => {
                                                     value={c.id}
                                                     checked={selectedCategories.includes(c.id)}
                                                     disabled={
-                                                        selectedCategories.includes(13) && c.id !== 13
+                                                        selectedCategories.includes(PLANT_CARE_ID) && c.id !== PLANT_CARE_ID
                                                     }
                                                     onChange={() => handleCategoryChange(c.id)}
                                                     />
@@ -437,7 +437,7 @@ const ModifyProduct = () => {
                             </div>
                     </fieldset>
                     {
-                        !selectedCategories.includes(13) &&
+                        !selectedCategories.includes(PLANT_CARE_ID) &&
                     <fieldset className="flex flex-col w-full border-2 border-text rounded-md mt-4 p-4 gap-3">
                         <legend className=" text-2xl font-semibold">Tags</legend>
                         {tags !== undefined && tags.map((t) => (
@@ -485,13 +485,6 @@ const ModifyProduct = () => {
                     }                    
                         <button onClick={createJson} className="mt-8 py-2 px-6 bg-accent rounded-md text-white font-bold">Save Changes</button>
                 </form>
-
-                {/* <div className="flex flex-col mt-15 items-center">
-                        <input type="file"/>
-                        <button onClick={handlePost}>hello</button>
-                        {imageData}
-                    </div> */}
-                    
             </div>
         </div>
     )
