@@ -190,7 +190,8 @@ MEDIA_URL = '/media/'
 CORS_ALLOW_ALL_ORIGINS = False  # safer in production
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://leafy-frontend.onrender.com",  # (when deployed)
+    "https://leafy-frontend.onrender.com",
+    "https://leafy-neighbor.vercel.app",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
