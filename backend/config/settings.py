@@ -187,9 +187,12 @@ MEDIA_URL = '/media/'
 #     "http://localhost:8080",
 #     "http://127.0.0.1:8000"  # React frontend
 # ]
-CORS_ALLOW_ALL_ORIGINS = True
-
-
+CORS_ALLOW_ALL_ORIGINS = False  # safer in production
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://leafy-frontend.onrender.com",  # (when deployed)
+]
+CORS_ALLOW_CREDENTIALS = True
 
 
 RAZORPAY_KEY_ID = env('RAZORPAY_KEY_ID')
