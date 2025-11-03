@@ -144,7 +144,7 @@ export const userSignUp = async(formData) => {
 }
 
 export const getUser = async(id) => {
-    const response = await API.get(`/users/${id}`)
+    const response = await API.get(`/users/${id}/`)
     return response
 }
 

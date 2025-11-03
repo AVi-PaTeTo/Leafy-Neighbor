@@ -103,14 +103,14 @@ const Login = () => {
                                 </div>
                             </div>
 
-                            <a className="self-end text-accent mb-6" href="">Forgot Password?</a>
+                            <a className="self-end text-accent mb-6" href="#">Forgot Password?</a>
 
                             <button onClick={(e) => handleLogin(e, loginFormData)} className="hover:cursor-pointer w-full  py-2 bg-primary rounded-md mb-6 font-semibold shadow-md">Sign In</button>
 
                             <p>or sign in with</p>
 
                             <div className="flex w-full justify-evenly mt-6">
-                                <div className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="">
+                                <div className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="#">
                                     <svg className="stroke-text stroke-1 fill-transparent h-6 w-6 sm:h-8 sm:w-8" xmlns="http://www.w3.org/2000/svg" width="32" height="32" enableBackground="new 0 0 32 32" viewBox="0 0 32 32" id="google">
                                         <title>feature for the future</title>
                                         <path fill="#263238" d="M16.33,31c-5.777,0-10.942-3.203-13.481-8.358C1.828,20.565,1.31,18.331,1.31,16
@@ -130,13 +130,13 @@ const Login = () => {
                                     
                                 </div>
 
-                                <div className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="">
+                                <div className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="#">
                                     <svg className="stroke-1.5  h-6 w-6 sm:h-8 sm:w-8" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
                                     <title>feature for the future</title>
                                     </svg>
                                 </div>
                                 
-                                <div className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="">
+                                <div className="py-1 px-4 outline-2 outline-primary bg-primary rounded-md shadow-md" href="#">
                                     <svg className="stroke-1.5 h-6 w-6 sm:h-8 sm:w-8" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" ><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
                                     <title>feature for the future</title>
                                     </svg>
@@ -147,7 +147,7 @@ const Login = () => {
                                 Don't have an account? 
                                 <a  onClick={(e) => {e.preventDefault() 
                                                     setSignUpFormVisible(prev => !prev)}} 
-                                    className="text-accent pl-1 " href="">
+                                    className="text-accent pl-1 " href="#">
                                     Sign Up
                                 </a>
                             </p>

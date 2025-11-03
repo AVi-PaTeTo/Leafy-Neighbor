@@ -7,8 +7,8 @@ const isLocalhost =
   hostname === "0.0.0.0";
 
 const baseURL = isLocalhost
-  ? import.meta.env.VITE_API_URL_LOCAL + "/api"
-  : import.meta.env.VITE_API_URL + "/api";
+  ? import.meta.env.VITE_API_URL_LOCAL + "/api/"
+  : import.meta.env.VITE_API_URL + "/api/";
 
 // console.log("🌐 Using API base URL:", baseURL);
 
@@ -24,5 +24,4 @@ API.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
-
 export default API;
