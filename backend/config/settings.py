@@ -56,6 +56,10 @@ INSTALLED_APPS = [
 
     #authentication
     'rest_framework_simplejwt',
+
+    #cloud image storage
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"
@@ -183,7 +187,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,"static")
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 MEDIA_URL = '/media/'
 
-CORS_ALLOW_ALL_ORIGINS = True  # safer in production
+CORS_ALLOW_ALL_ORIGINS = False  # safer in production
 CORS_ALLOWED_ORIGINS = [
     "https://leafy-neighbor.vercel.app",
     "http://localhost:5173",
@@ -211,6 +215,14 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API_KEY'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 RAZORPAY_KEY_ID = env('RAZORPAY_KEY_ID')
 RAZORPAY_KEY_SECRET = env('RAZORPAY_KEY_SECRET')
