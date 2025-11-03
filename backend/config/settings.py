@@ -185,7 +185,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = os.path.join(BASE_DIR,"static")
 
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
-MEDIA_URL = '/media/'
+MEDIA_URL = ''
 
 CORS_ALLOW_ALL_ORIGINS = False  # safer in production
 CORS_ALLOWED_ORIGINS = [
