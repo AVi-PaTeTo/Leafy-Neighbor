@@ -17,11 +17,13 @@ djangorestframework_simplejwt==5.5.0
 drf-spectacular==0.28.0
 enum-compat==0.0.3
 gprof2dot==2024.6.6
+gunicorn==23.0.0
 idna==3.11
 inflection==0.5.1
 jsonschema==4.23.0
 jsonschema-specifications==2024.10.1
 Markdown==3.7
+packaging==25.0
 pillow==11.3.0
 psycopg2-binary==2.9.11
 pycodestyle==2.12.1
