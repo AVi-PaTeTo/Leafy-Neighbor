@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from apps.category.models import Category, Tag
 from apps.user.models import VendorProfile
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 User = get_user_model()
 
@@ -24,7 +25,7 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to="images/")
+    image = models.ImageField(storage=MediaCloudinaryStorage(), upload_to="leafy/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
 
