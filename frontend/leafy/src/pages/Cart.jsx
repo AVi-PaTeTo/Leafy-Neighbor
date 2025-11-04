@@ -252,7 +252,9 @@ const Cart = (props) => {
                                         </span>
                                     ))}
                             </div>
-                            <div className="flex sm:hidden fixed left-0 -bottom-2 w-full rounded-b-lg bg-primary p-2 justify-center items-center">
+                            <div
+                                onClick={() => handlePayment()}
+                                className="flex sm:hidden fixed left-0 -bottom-2 w-full rounded-b-lg bg-primary p-2 justify-center items-center">
                                 <h2 className="font-semibold text-2xl text-text ">Proceed to Checkout</h2>
                             </div> 
                         </div>                

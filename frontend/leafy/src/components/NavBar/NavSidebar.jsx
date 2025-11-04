@@ -32,12 +32,12 @@ const NavSidebar = (props) => {
             onClick={(e) => {if (e.target === e.currentTarget) {props.onClick(false);}}} 
             className={`fixed ${props.sidebar?'w-screen':''} h-screen top-0 left-[-1px] z-30`}>
             <div className={`h-screen transition-all ease-in-out duration-700  bg-gray-800 ${props.sidebar?'w-[300px]':'w-0 '} overflow-hidden fixed md:hidden z-31`}>
-                <div className="relative h-full">
+                <div className="relative h-[100dvh]">
                     <div className="absolute w-[300px] pt-1 top-[-1px] left-[57px]  bg-gray-800 z-5">
                         <Logo  size={'40px'} f_size={'1.1rem'} font={'text-white'}/>
                     </div>
                     <div className="overflow-hidden overflow-y-auto .hide-scrollbar h-[calc(100vh-56px)]">
-                        <div className={` w-full h-fit px-8 pt-20 flex flex-col gap-3  ${props.sidebar? '':''} font-semibold text-xl text-white`}>
+                        <div className={` w-full h-fit px-8 pb-15 pt-20 flex flex-col gap-3  ${props.sidebar? '':''} font-semibold text-xl text-white`}>
                             <div className="hover:bg-gray-700 relative transition-colors duration-100 ease-in-out pl-8 py-2 w-[236px] rounded-md flex gap-2">
                                 <Link to={'/'} className="absolute inset-0"></Link>
                                 <svg className="h-[24px] w-[24px] shrink-0 flex-none stroke-[1.5px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
@@ -107,6 +107,8 @@ const NavSidebar = (props) => {
                             </div>
                         </div>
                     </div>
+
+                    {/* user pill */}
                     <div className="absolute px-4 py-2 w-full bottom-0 h-[60px] bg-gray-800">
                         <div onClick={() => logButton()} className="flex items-center justify-between w-[268px] h-full rounded-[50px] outline-2 outline-gray-600 bg-gray-900">
                             <div className="ml-[2px] flex items-center gap-2">
