@@ -13,9 +13,18 @@ class AddressViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         is_default = self.request.data.get('is_default', False)
+
+        # checks if user has any address saved
+        has_addresses = Address.objects.filter(user=self.request.user).exists()
+
+        # if no address found, the first address will be defaulted to true
+        if not has_addresses:
+            is_default = 'true'
+        
         if is_default == 'true':
             Address.objects.filter(user=self.request.user, is_default=True).update(is_default=False)
-        serializer.save(user = self.request.user)
+        serializer.save(user=self.request.user, is_default=(is_default == 'true'))
+
 
     def perform_update(self, serializer):
         is_default = self.request.data.get('is_default', False)

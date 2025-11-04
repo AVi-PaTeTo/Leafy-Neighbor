@@ -16,19 +16,9 @@ class OrderItemSerializer(serializers.ModelSerializer):
         model = OrderItem
         fields = ['id',  'order', 'product', 'product_name','product_image', 'quantity', 'unit_price']
         read_only_fields = ['id']
-
-    # def get_product_image(self, obj):
-    #     if obj.first_image:
-    #         request = self.context.get('request')
-    #         return request.build_absolute_uri(f"/media/{obj.first_image}")
-    #     return None
     
     def get_product_image(self, obj):
-        first_image = getattr(obj, 'first_image', None)
-        if first_image:
-            request = self.context.get('request')
-            return request.build_absolute_uri(f"/media/{first_image}")
-        return None
+            return obj.product.first_image.url
 
 class OrderSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True, read_only=True)

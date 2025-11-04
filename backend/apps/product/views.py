@@ -28,7 +28,7 @@ class ProductViewSet(ModelViewSet):
             Product.objects
             .annotate(  avg_rating_value=Avg('product_reviews__rating'), 
                         review_count=Count('product_reviews', distinct=True),
-                        first_image=Subquery(first_image_subquery))
+                        first_image_url=Subquery(first_image_subquery))
             .prefetch_related('images', 'tags', 'categories')
             .select_related('vendor')
         )

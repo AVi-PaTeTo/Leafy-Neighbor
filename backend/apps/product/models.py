@@ -18,6 +18,10 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_modified =  models.DateTimeField(auto_now=True)
 
+    @property
+    def first_image(self):
+        first = self.images.first()
+        return first.image if first else None
     
     def __str__(self):
         return self.title

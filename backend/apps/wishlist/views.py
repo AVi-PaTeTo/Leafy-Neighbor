@@ -14,10 +14,6 @@ class WishlistViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
-        first_image_qs = ProductImage.objects.filter(
-            product=OuterRef('product_id')  # ✅ FK column on WishlistItem
-        ).order_by('id').values('image')[:1]
-
         return (
             Wishlist.objects
             .filter(user=self.request.user)
@@ -26,7 +22,6 @@ class WishlistViewSet(viewsets.ModelViewSet):
                     'items',
                     queryset=WishlistItem.objects
                         .select_related('product')
-                        .annotate(first_image=Subquery(first_image_qs))
                 )
             )
         )

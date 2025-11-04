@@ -21,30 +21,11 @@ def address_format(address):
            f"{address.city} - {address.pincode}\n"
            f"{address.state}\n")
 
-
-        # if user.is_staff:
-        #     return(
-        #     Order.objects.all()
-        #     .prefetch_related(
-        #         Prefetch(
-        #             'order_items',
-        #             queryset=OrderItem.objects
-        #                 .select_related('product')
-        #                 .annotate(first_image=Subquery(first_image_qs))
-        #                 .order_by('-unit_price','-quantity')
-        #         )
-        #     )
-        # )
-
 class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
 
     def get_queryset(self):
         user = self.request.user
-
-        first_image_qs = ProductImage.objects.filter(
-            product=OuterRef('product_id')
-        ).order_by('id').values('image')[:1]
 
 
         return (
@@ -55,7 +36,6 @@ class OrderViewSet(viewsets.ModelViewSet):
                     'order_items',
                     queryset=OrderItem.objects
                         .select_related('product')
-                        .annotate(first_image=Subquery(first_image_qs))
                         .order_by('-unit_price','-quantity')
                 )
             )
@@ -112,16 +92,10 @@ class OrderItemViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         queryset = OrderItem.objects.all()
-        
-        first_image_qs = ProductImage.objects.filter(
-            product=OuterRef('product_id')
-        ).order_by('id').values('image')[:1]
 
         order_id = self.request.query_params.get('order_id')
         if order_id is not None:
             queryset = (queryset.filter(order_id=order_id)
                                 .select_related('product','order')
-                                .annotate(first_image=Subquery(first_image_qs)))
-        else:
-            queryset = queryset.annotate(first_image=Subquery(first_image_qs))
+                                )
         return queryset

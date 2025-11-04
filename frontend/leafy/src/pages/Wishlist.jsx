@@ -208,7 +208,7 @@ const Wishlist = (props) => {
                                                     </button>
                                                     <img className="h-full object-contain self-start rounded-l-md" src={item.product_image} alt="" />
                                                     <div className="flex flex-col w-full justify-between">
-                                                        <div className="px-2 relative sm:px-4 md:px-8 pt-4 w-full">
+                                                        <div className="hover:cursor-pointer  px-2 relative sm:px-4 md:px-8 pt-4 w-full">
                                                             <h2 className="font-semibold text-2xl md:text-3xl">{item.product_title}</h2>
                                                             <div onClick={() => handleCardClick(item.product,item.product_title)} className="absolute inset-0"></div>
                                                         </div>

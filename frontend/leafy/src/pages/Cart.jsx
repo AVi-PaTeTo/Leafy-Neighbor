@@ -222,8 +222,9 @@ const Cart = (props) => {
                                             <div className="flex flex-col w-full h-full">
                                                 <div className="flex flex-col w-full h-full justify-between">
                                                     <div className="px-2 sm:px-4 md:px-8 pt-4 max-w-full overflow-clip">
-                                                        <h2 className="relative font-semibold text-2xl md:text-4xl">{item.product_name}</h2>
+                                                        <h2 className="hover:cursor-pointer relative font-semibold text-2xl md:text-4xl">{item.product_name}
                                                         <div onClick={()=>handleCardClick(item.product, item.product_name)} className="absolute inset-0"></div>
+                                                        </h2>
                                                     </div>
                                                     <div className="flex w-full flex-wrap">
                                                         <h2 className="pl-2 sm:pl-4 md:pl-8 font-semibold text-2xl md:text-3xl">₹ {item.price}</h2>

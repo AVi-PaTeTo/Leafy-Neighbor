@@ -29,7 +29,7 @@ const Settings = () =>{
                                                     'user': ''})
     
 
-    const [newAddrFormData, setNewAddrFormData] = useState({   'address_type': "Home",
+    const [newAddrFormData, setNewAddrFormData] = useState({   'address_type': "home",
                                                                 'city': "",
                                                                 'house': "",
                                                                 'is_default': false,
@@ -124,6 +124,8 @@ const Settings = () =>{
         newAddrFormData['address_type'] = e.target.id
         setAddrTypeDropdown(false)
     }
+
+    console.log(newAddrFormData)
 
     const addNewAddr = async (obj) => {
         let empty = false

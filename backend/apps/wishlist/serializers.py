@@ -23,10 +23,7 @@ class WishlistItemSerializer(serializers.ModelSerializer):
         return value
     
     def get_product_image(self, obj):
-        if obj.first_image:
-            request = self.context.get('request')
-            return request.build_absolute_uri(obj.first_image.url if hasattr(obj.first_image, 'url') else f"/media/{obj.first_image}")
-        return None
+        return obj.product.first_image.url
 
 class WishlistSerializer(serializers.ModelSerializer):
     items = WishlistItemSerializer(many=True, read_only=True)

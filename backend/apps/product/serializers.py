@@ -41,10 +41,16 @@ class ProductSerializer(serializers.ModelSerializer):
         read_only_fields = ['id','vendor', 'vendor_name', 'created_at', 'last_modified', 'categories_detail', 'tags_detail']
 
     def get_product_image(self, obj):
-        if hasattr(obj, 'first_image') and obj.first_image:
-            request = self.context.get('request')
-            return request.build_absolute_uri(f"/media/{obj.first_image}")
-        return None
+        image = getattr(obj, "first_image", None)
+        if not image:
+            return None
+
+        # Prefer .url if available
+        if hasattr(image, "url"):
+            try:
+                return image.url
+            except Exception:
+                pass
     
     def get_review_count(self, obj):
         if hasattr(obj, 'review_count_value'):

@@ -13,9 +13,6 @@ class CartViewSet(viewsets.ModelViewSet):
     filter_backends = [OrderingFilter]
 
     def get_queryset(self):
-        first_image_qs = ProductImage.objects.filter(
-            product=OuterRef('product_id')
-        ).order_by('id').values('image')[:1]
 
         return (
             Cart.objects
@@ -25,7 +22,6 @@ class CartViewSet(viewsets.ModelViewSet):
                     'items',
                     queryset=CartItem.objects
                         .select_related('product')
-                        .annotate(first_image=Subquery(first_image_qs))
                         .order_by('added_on')
                 )
             )
@@ -39,15 +35,11 @@ class CartItemViewSet(viewsets.ModelViewSet):
     ordering = ["added_on"]
 
     def get_queryset(self):
-        first_image_qs = ProductImage.objects.filter(
-            product=OuterRef('product_id')
-        ).order_by('id').values('image')[:1]
-
         return (
             CartItem.objects
             .filter(cart__user=self.request.user)
             .select_related('product', 'cart')
-            .annotate(first_image=Subquery(first_image_qs))
+
         )
     
     def perform_create(self, serializer):
