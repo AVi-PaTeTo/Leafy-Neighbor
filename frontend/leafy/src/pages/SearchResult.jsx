@@ -126,7 +126,9 @@ const SearchResult = (props) => {
                 if(error.status === 500){
                     alert("Can't add duplicates.")
                 };
-            }       
+            }  finally {
+                alert("Item added successfully")
+            }     
         };
     
     const heartButton = (id) =>{
