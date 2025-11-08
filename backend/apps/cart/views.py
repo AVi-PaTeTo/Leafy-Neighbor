@@ -2,7 +2,9 @@ from django.shortcuts import render
 from .models import Cart, CartItem
 from apps.product.models import ProductImage
 from .serializers import CartSerializer, CartItemSerializer
-from rest_framework import viewsets
+from apps.user.serializers import UserSerializer
+from rest_framework import viewsets, status
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.filters import OrderingFilter
 from django.db.models import Prefetch, OuterRef, Subquery
@@ -41,7 +43,19 @@ class CartItemViewSet(viewsets.ModelViewSet):
             .select_related('product', 'cart')
 
         )
-    
+
+        
+    def create(self, request, *args, **kwargs):
+        product_id = request.data.get("product")
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        if CartItem.objects.filter(cart=cart, product_id=product_id).exists():
+            return Response(
+                {"detail": "Item already in your cart."},
+                status=status.HTTP_409_CONFLICT
+            )
+
+        return super().create(request, *args, **kwargs)
+
     def perform_create(self, serializer):
         cart, created = Cart.objects.get_or_create(user=self.request.user)
         serializer.save(cart=cart)

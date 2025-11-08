@@ -62,7 +62,7 @@ const Showcase = () => {
   return (
     <section className="w-full">
       {/* Mobile swipe layout */}
-      <div onWheel={handleWheel} className="sm:hidden px-5 overflow-x-scroll custom-scrollbar">
+      <div onWheel={handleWheel} className="sm:hidden px-5 overflow-x-scroll hide-scrollbar">
         <div className="flex gap-5 px-4 py-6 w-max">
           {cards.map((card, i) => (
             <div

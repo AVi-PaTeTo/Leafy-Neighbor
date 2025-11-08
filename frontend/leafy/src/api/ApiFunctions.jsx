@@ -20,7 +20,7 @@ export const deleteProduct = async(id) => {
 
 export const createProduct = async (formData) => {
   const response = await API.post('/products/', formData);
-  return response.data;
+  return response;
 };
 
 export const patchProduct = async (prodId,formData) => {

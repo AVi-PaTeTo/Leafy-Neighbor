@@ -2,6 +2,9 @@ import { useState, useRef, useEffect } from "react"
 import AutoGrowingTextarea from "../components/TextArea"
 import ImageUploader from "../components/ImageUploader";
 import { createProduct, getProductById, getProducts, getCategories, getTags } from "../api/ApiFunctions";
+import Toast from "../components/Toast";
+
+
 
 const Create = () => {
     const PLANT_CARE_ID = 6;
@@ -17,6 +20,8 @@ const Create = () => {
     const [specIndex, setSpecIndex] = useState(0)
     const [features, setFeatures] = useState([])
     const [specifications, setSpecifications] = useState([])
+    const [show, setShow] = useState(false)
+    const [toastMessage, setToastMessage] = useState("") 
     const [prodFormData, setProdFormData] = useState({
         name: '',
         price:'',
@@ -25,6 +30,7 @@ const Create = () => {
         care_instructions:'',
         detailed_description: ''
     })
+
 
     useEffect(() => {        
             const fetchCategories =async() =>{
@@ -90,8 +96,14 @@ const Create = () => {
         prev.filter(spec => spec['index'] !== id));
     }
 
+   
+    function updateToast(message) {
+            setToastMessage(message)
+            setShow(true);
+            setTimeout(() => setShow(false), 2000);
+        }
 
-    const createJson = async (e) => {
+    const postProduct = async (e) => {
         e.preventDefault();
 
         let finalSpecifications = {};
@@ -157,11 +169,14 @@ const Create = () => {
 
         try {
             const response = await createProduct(formData);
-            console.log(response)
+            console.log(response.data.id)
+
+            if (response.status >=200 && response.status < 300) {
+                    updateToast('Product uploaded successfully.');
+                }
             } catch (error) {
-                console.error(error);
-            }
-            alert('uploaded successfully')
+                updateToast('Something went wrong.');
+        }
         };
 
     //only used inside handleTagChange 
@@ -218,6 +233,7 @@ const Create = () => {
         
     return(
         <div className="w-full min-h-screen max-h-fit bg-primary flex flex-col">
+            <Toast show={show} message={toastMessage}/>
             <div className="pt-12 flex justify-center ">
                 
                 
@@ -417,7 +433,7 @@ const Create = () => {
                         ))}
                     </fieldset>
                     }                    
-                        <button onClick={createJson} className="mt-8 py-2 px-6 bg-accent rounded-md text-white font-bold">Create</button>
+                        <button onClick={postProduct} className="mt-8 py-2 px-6 bg-accent rounded-md text-white font-bold">Create</button>
                 </form>    
             </div>
         </div>

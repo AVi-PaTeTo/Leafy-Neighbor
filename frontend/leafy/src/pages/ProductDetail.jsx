@@ -1,13 +1,14 @@
 import Navbar from "../components/NavBar/Navbar"
 import ProductDescription from "../components/ProductDetails/ProductDescription"
 import { useState, useEffect, use } from "react"
-import { getProductById, getProductReviews, getWishlist } from "../api/ApiFunctions"
+import { getProductById, getProductReviews, getWishlist, addToCart } from "../api/ApiFunctions"
 import { useParams, useLocation } from "react-router-dom"
 import ImageSection from "../components/ProductDetails/ImageSection"
 import Review from "./Review"
 import StarRating from "../components/Reviews/StarRating"
 import SimplePopup from "../components/Wishlist/WishlistPopup"
 import { useUser } from "../context/UserContext"
+import Toast from "../components/Toast"
 
 const ProductDetail = () => {
     const {user} = useUser()
@@ -21,6 +22,8 @@ const ProductDetail = () => {
     const [hide,setHide] = useState(false)
     const [images, setImages] = useState([])
     const [reviewsList, setReviewsList] = useState()
+    const [show, setShow] = useState(false);
+    const [toastMessage, setToastMessage] = useState("")
     const [prodData, setProdData] = useState({
         title: '',
         price: 0,
@@ -85,23 +88,40 @@ const ProductDetail = () => {
         }
     }
 
+
+
+    function updateToast(message) {
+        setToastMessage(message)
+        setShow(true);
+        setTimeout(() => setShow(false), 2000);
+    }
+
+
     const addToCartButton = async() => {
 
-            const formData = new FormData();
-            formData.append('product', id)
-            formData.append('quantity', quant)
-    
-            
-            try {
-                if(user == null){
-                    alert("You need to login first.")
-                    return
+        const formData = new FormData();
+        formData.append('product', id)
+        formData.append('quantity', quant)
+
+        
+        if(user === null){
+            alert("You need to login to do that.")
+            return
+        }
+        try {
+                const response = await addToCart(formData);
+
+                if (response.status === 201) {
+                    updateToast('Item added to your cart!');
                 }
-                const response = await addToCart(formData); 
-                } catch (error) {
-                    console.error(error);
-                }       
-            };
+            } catch (error) {
+                if (error.status === 409) {
+                    updateToast('Item already in your cart.');
+                } else {
+                    updateToast('Something went wrong.');
+                }
+            }
+        };
 
     function toTitleCase(str) {
         return str
@@ -158,8 +178,8 @@ const ProductDetail = () => {
                 </div>}
 
                 {/* add to wishlist popup */}
-                <SimplePopup product_id={id} wishlist={wishlist} isOpen={wishlistPopUpOpen} onClose={() => setWishlistPopUpOpen(false)}/>
-
+                <SimplePopup product_id={id} wishlist={wishlist} isOpen={wishlistPopUpOpen} updateToast={updateToast} onClose={() => setWishlistPopUpOpen(false)}/>
+                <Toast show={show} message={toastMessage} />
                 <div className="grid grid-cols-10  w-full h-fit">
                     {/* product images */}
                     <div className=" lg:py-12 md:px-25 lg:px-10 col-start-1 col-end-11  lg:col-start-1 lg:col-end-6 row-start-1 row-end-3  gap-4 min-w-0">

@@ -2,6 +2,7 @@ import { use, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { getUser, getUserAddress, patchUserAddress, postAddress, changePassword, saveUserInfo, becomeVendor } from "../api/ApiFunctions";
+import Toast from "../components/Toast";
 import bg from "../assets/sora.png"
 
 
@@ -52,6 +53,8 @@ const Settings = () =>{
     const [newAddrPopup, setNewAddrPopup] = useState(false)
     const [changePassPop, setChangePassPop] = useState(false)
     const [passError, setPassError] = useState('')
+    const [show, setShow] = useState(false)
+    const [toastMessage, setToastMessage] = useState("")                                                    
 
     useEffect(() => {
         if (!user || !user.id) {
@@ -125,7 +128,6 @@ const Settings = () =>{
         setAddrTypeDropdown(false)
     }
 
-    console.log(newAddrFormData)
 
     const addNewAddr = async (obj) => {
         let empty = false
@@ -197,6 +199,12 @@ const Settings = () =>{
         }
     }
 
+    function updateToast(message) {
+        setToastMessage(message)
+        setShow(true);
+        setTimeout(() => setShow(false), 2000);
+    }
+
     const saveUser = async() => {
         const formData = new FormData()
         formData.append('pfp', userData.pfp)
@@ -208,11 +216,11 @@ const Settings = () =>{
         try{
             const response = await saveUserInfo(userData.id, formData)
             setUser(prev => ({...prev, ...response.data}))
-        } catch(error) {
-                console.log(error)
-        } finally {
-            
-            console.log("Changes Saved.")
+            if (response.status === 200) {
+                    updateToast('Changes have been saved.');
+                }
+            } catch (error) {
+                updateToast('Something went wrong.');
         }
 
     }
@@ -252,6 +260,7 @@ const Settings = () =>{
             {/* <div className="fixed flex h-full w-screen -z-5">
                 <img className="h-full w-full object-cover object-right" src={bg} alt="" />
             </div> */}
+            <Toast show={show} message={toastMessage}/>
             {pfpPopup && 
                 <div className="fixed flex justify-center items-center h-full w-full bg-black/50 z-20 py-25 px-2">
                     <div className="relative flex flex-col w-full max-w-[600px] h-full max-h-fit py-8 px-4 sm:px-8 gap-4 bg-zinc-100 rounded-xl overflow-hidden">

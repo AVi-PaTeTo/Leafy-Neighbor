@@ -14,6 +14,7 @@ const NavSidebar = (props) => {
     const closeDropdowns = () =>{
         setCategoryDropdown(false)
         setUserDropdown(false)
+        props.onClick(false)
     }
 
       function logButton(){
@@ -39,14 +40,14 @@ const NavSidebar = (props) => {
                     <div className="overflow-hidden overflow-y-auto .hide-scrollbar h-[calc(100vh-56px)]">
                         <div className={` w-full h-fit px-8 pb-15 pt-20 flex flex-col gap-3  ${props.sidebar? '':''} font-semibold text-xl text-white`}>
                             <div className="hover:bg-gray-700 relative transition-colors duration-100 ease-in-out pl-8 py-2 w-[236px] rounded-md flex gap-2">
-                                <Link to={'/'} className="absolute inset-0"></Link>
+                                <Link onClick={() => {closeDropdowns()}} to={'/'} className="absolute inset-0"></Link>
                                 <svg className="h-[24px] w-[24px] shrink-0 flex-none stroke-[1.5px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                                 Home
                             </div>
 
                             {(user != null && user.is_vendor) && 
                                 <div className="hover:bg-gray-700 relative transition-colors duration-100 ease-in-out pl-8 py-2 w-[236px] rounded-md flex gap-2">
-                                <Link to={`/vendor/${user.vendor_profile.id}`} className="absolute inset-0"></Link>
+                                <Link onClick={() => {closeDropdowns()}} to={`/vendor/${user.vendor_profile.id}`} className="absolute inset-0"></Link>
                                 {/* <svg className="h-[24px] w-[24px] shrink-0 flex-none stroke-[1.5px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> */}
                                 <svg className="h-[24px] w-[24px] shrink-0 flex-none stroke-[1.5px]" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Zm80-400h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
                                 Vendor
@@ -62,10 +63,10 @@ const NavSidebar = (props) => {
                                 <div className={`grid ${userDropdown?'grid-rows-[1fr] pb-4':'grid-rows-[0fr]'} transition-all ease-in-out duration-600`}>
                                     <div className="overflow-hidden  flex flex-col gap-2 pl-11 w-[250px]">
                                         <div className="border-l-1 pl-4 flex flex-col">
-                                            <Link to={'settings'} className="font-light mt-2 hover:translate-x-2 transition-all ease-in-out duration-200">Profile</Link>
-                                            <Link to={'wishlist'} className="font-light mt-2 hover:translate-x-2 transition-all ease-in-out duration-200">Wishlist</Link>
-                                            <Link to={'cart'} className="font-light mt-2 hover:translate-x-2 transition-all ease-in-out duration-200">Cart</Link>
-                                            <Link to={'orders'} className="font-light mt-2 hover:translate-x-2 transition-all ease-in-out duration-200">Orders</Link>
+                                            <Link onClick={() => {closeDropdowns()}} to={'settings'} className="font-light mt-2 hover:translate-x-2 transition-all ease-in-out duration-200">Profile</Link>
+                                            <Link onClick={() => {closeDropdowns()}} to={'wishlist'} className="font-light mt-2 hover:translate-x-2 transition-all ease-in-out duration-200">Wishlist</Link>
+                                            <Link onClick={() => {closeDropdowns()}} to={'cart'} className="font-light mt-2 hover:translate-x-2 transition-all ease-in-out duration-200">Cart</Link>
+                                            <Link onClick={() => {closeDropdowns()}} to={'orders'} className="font-light mt-2 hover:translate-x-2 transition-all ease-in-out duration-200">Orders</Link>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +86,6 @@ const NavSidebar = (props) => {
                                             {props.categories.map(category => (
                                                 <p onClick={()=>{navigate(`/browse?category=${category.id}`, { replace: true })
                                                                 closeDropdowns()
-                                                                props.onClick(false)
                                                                 }} className="font-light mt-2 hover:translate-x-2 transition-all ease-in-out duration-200" key={category.id}>{category.name}</p>
                                             ))}
                                         </div>
@@ -94,14 +94,14 @@ const NavSidebar = (props) => {
                             </div>
 
                             <div className="hover:bg-gray-700 relative transition-colors duration-100 ease-in-out  pl-8 py-2 w-[236px] rounded-md flex gap-2">
-                                <Link to={'about'} className="absolute inset-0"></Link>
+                                <Link onClick={() => {closeDropdowns()}} to={'about'} className="absolute inset-0"></Link>
                                 <svg className="h-[24px] w-[24px] shrink-0 flex-none " xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/></svg>
                                 {/* <svg className="h-[24px] w-[24px] shrink-0 flex-none stroke-accent fill-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg> */}
                                 About
                             </div>
 
                             <div className="hover:bg-gray-700 relative transition-colors duration-100 ease-in-out  pl-8 py-2 w-[236px] rounded-md flex gap-2">
-                                <Link to={'contact'} className="absolute inset-0"></Link>
+                                <Link onClick={() => {closeDropdowns()}} to={'contact'} className="absolute inset-0"></Link>
                                 <svg className="h-[24px] w-[24px] shrink-0 flex-none stroke-[1.5px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" ><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>
                                 Contact
                             </div>

@@ -117,11 +117,13 @@ export default function Carousel() {
 
     //cards container
     <div className="relative w-full h-full flex items-center justify-center bg-gray-100 overflow-hidden">
+      <div className="absolute top-7 font-bold tracking-wider text-3xl">Testimonials</div>
       <button
         onClick={handlePrev}
-        className="absolute left-4 z-30 bg-white/80 text-white px-3 py-2 rounded"
+        className="absolute left-4 z-30 bg-black/60 text-white px-3 py-2 rounded"
       >
         <svg
+          className="fill-gray-200"
           xmlns="http://www.w3.org/2000/svg"
           height="24px"
           viewBox="0 -960 960 960"
@@ -133,9 +135,10 @@ export default function Carousel() {
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-4 z-30 bg-white/80 text-white px-3 py-2 rounded"
+        className="absolute right-4 z-30 bg-black/60 text-white px-3 py-2 rounded"
       >
         <svg
+          className="fill-gray-200"
           xmlns="http://www.w3.org/2000/svg"
           height="24px"
           viewBox="0 -960 960 960"
@@ -147,7 +150,7 @@ export default function Carousel() {
       </button>
 
       {/* Carousel Cards */}
-      <div className="relative w-full h-full flex justify-evenly items-center overflow-clip">
+      <div className="relative top-6 w-full h-full flex justify-evenly items-center overflow-clip">
         {cards.map((item, index) => {
           const pos =
             positions[(index - activeIndex + cards.length) % cards.length][0];

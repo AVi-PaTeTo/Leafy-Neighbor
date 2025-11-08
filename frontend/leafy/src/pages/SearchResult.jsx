@@ -8,6 +8,7 @@ import SimplePopup from "../components/Wishlist/WishlistPopup"
 import SideBar from "../components/Filter/SideBar"
 import StarRating from "../components/Reviews/StarRating"
 import Footer from "../components/Footer";
+import Toast from "../components/Toast";
 
 const SearchResult = (props) => {
     const location = useLocation()
@@ -24,6 +25,8 @@ const SearchResult = (props) => {
     const [filterParams, setFilterParams] = useState(null)
     const [sortPopUp, setSortPopUp] = useState(false)
     const [ordering, setOrdering] = useState('')
+    const [show,setShow] = useState(false)
+    const [toastMessage, setToastMessage] = useState("")
 
     
 
@@ -118,17 +121,18 @@ const SearchResult = (props) => {
             return
         }
         try {
-            const response = await addToCart(formData);
-            if(response.status === 201){
-                console.log("Item added to the cart.")
-            }
+                const response = await addToCart(formData);
+
+                if (response.status === 201) {
+                    updateToast('Item added to your cart!');
+                }
             } catch (error) {
-                if(error.status === 500){
-                    alert("Can't add duplicates.")
-                };
-            }  finally {
-                alert("Item added successfully")
-            }     
+                if (error.status === 409) {
+                    updateToast('Item already in your cart.');
+                } else {
+                    updateToast('Something went wrong.');
+                }
+            }
         };
     
     const heartButton = (id) =>{
@@ -138,6 +142,12 @@ const SearchResult = (props) => {
         }
         setPopupOpen(true)
         setItemToAdd(id)
+    }
+
+     function updateToast(message) {
+        setToastMessage(message)
+        setShow(true);
+        setTimeout(() => setShow(false), 2000);
     }
 
     const applyOrdering = () => {
@@ -165,10 +175,10 @@ const SearchResult = (props) => {
                     <div className="aspect-square  w-[50px] animate-[bouncy_1s_ease-in-out_infinite_450ms] bg-primary"></div>
                 </div>
             </div>
-            <SimplePopup product_id={itemToAdd} wishlist={wishlist} isOpen={popupOpen} onClose={() => {setPopupOpen(false)
+            <SimplePopup product_id={itemToAdd} wishlist={wishlist} isOpen={popupOpen} updateToast={updateToast} onClose={() => {setPopupOpen(false)
                                                                                                 setItemToAdd(null)}
             } />
-
+            <Toast show={show} message={toastMessage}/>
             <div className={`bg-zinc-800 sticky z-30 transition-all ease-in-out top-16  ${props.hide===true?'md:top-0 duration-200':'md:top-16 delay-50 duration-300'}`}>
                 <div>
                     <div className="flex h-fit items-center justify-between gap-4 px-2 sm:px-[3rem] py-[1rem] shadow-md">

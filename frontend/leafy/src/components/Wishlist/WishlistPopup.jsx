@@ -19,10 +19,17 @@ const SimplePopup = (props) => {
     formData.append('product', props.product_id)
     try{
 
-        await addToWishlist(formData)
-    } catch (error) {
-        console.log(error)
-    } finally {
+        const response = await addToWishlist(formData)
+        if (response.status === 201) {
+                    props.updateToast('Item added to your wishlist!');
+                }
+            } catch (error) {
+                if (error.status === 400) {
+                    props.updateToast('Item already in your wishlisht.');
+                } else {
+                    props.updateToast('Something went wrong.');
+                }
+            } finally {
         setSelected('')
         props.onClose()
     } 

@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import Footer from "../components/Footer";
+import Toast from "../components/Toast";
+
 
 const Wishlist = (props) => {
     const [wishlist, setWishlist] = useState([])
@@ -13,6 +15,9 @@ const Wishlist = (props) => {
     const [wishlistName, setWishlistName ]= useState('')
     const [toDelete, setToDelete] = useState(null)
     const {user} = useUser()
+    const [show, setShow] = useState(false)
+    const [toastMessage, setToastMessage] = useState("")
+
 
     const refreshWishlists= async() =>{
             const response = await getWishlist()
@@ -85,6 +90,7 @@ const Wishlist = (props) => {
         try {
             const status = await delWishlistItem(itemToDelete.id);
             if (status >= 200 && status < 300) { // HTTP success codes
+            updateToast("Item removed from wishlist.")
             setWishlist(prev =>
                 prev.map(wl =>
                 wl.id === w_id
@@ -99,20 +105,35 @@ const Wishlist = (props) => {
             console.error('Delete API error', error);
         }
         };
-
-    const handleAddButton = async(id) => {
-            const formData = new FormData();
-            formData.append('product', id)
-            formData.append('quantity', 1)
     
-            
-            try {
-                const response = await addToCart(formData); 
-                console.log(response)
-                } catch (error) {
-                    console.error(error);
-                }       
-            };
+    function updateToast(message) {
+        setToastMessage(message)
+        setShow(true);
+        setTimeout(() => setShow(false), 2000);
+    }
+    
+    const handleAddButton = async(id) => {
+        const formData = new FormData();
+        formData.append('product', id)
+        formData.append('quantity', 1)
+
+        if(user === null){
+        alert("You need to login to do that.")
+        return
+        }
+        try {
+                const response = await addToCart(formData);
+                if (response.status === 201) {
+                    updateToast('Item added to your cart!');
+                }
+            } catch (error) {
+                if (error.status === 409) {
+                    updateToast('Item already in your cart.');
+                } else {
+                    updateToast('Something went wrong.');
+                }
+            }
+        };
 
 
     const handleCreate = async () => {
@@ -148,7 +169,7 @@ const Wishlist = (props) => {
                     </div>
                 </div>
             </div>}
-
+            <Toast show={show} message={toastMessage}/>
             {deletePopup && <div    onClick={(e) => {if (e.target === e.currentTarget) {setDeletePopup(false);}}}
                                     className="absolute  w-full px-2 flex justify-center items-center z-55 inset-0 bg-black/60">
                 <div className="fixed bg-gray-100 w-[95%] max-w-[600px] rounded-md flex flex-col mx-2 z-56">

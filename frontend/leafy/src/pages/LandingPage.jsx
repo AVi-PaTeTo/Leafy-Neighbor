@@ -14,11 +14,12 @@ const LandingPage = () => {
         <HeroSection />
       </section>
 
-      <section className="w-full h-fit xl:px-20 px-10 py-12">
+      <section className="w-full h-fit xl:px-20 px-10 pt-12 pb-6">
         <Highlights />
       </section>
 
       <section className="w-full h-fit xl:px-20 sm:px-10 py-12">
+        <h1 className=" font-bold tracking-wider text-3xl sm:mb-4 text-center">Browse by categories</h1>
         <Showcase />
       </section>
 
