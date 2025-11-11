@@ -158,8 +158,8 @@ export const changePassword = async(id, formData) => {
     return response
 }
 
-export const becomeVendor = async(id) => {
-    const response = await API.post(`/users/${id}/make_vendor/`)
+export const becomeVendor = async(id, formData) => {
+    const response = await API.post(`/users/${id}/make_vendor/`, formData)
     return response
 }
 

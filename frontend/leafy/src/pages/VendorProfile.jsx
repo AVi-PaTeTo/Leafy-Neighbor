@@ -17,7 +17,10 @@ import { useUser } from "../context/UserContext";
 
 const VendorProfile = () => {
     const navigate = useNavigate();
-    const { vendorId } = useParams();
+    // const { vendorId } = useParams();
+    const location = useLocation();
+    const vendorId = location.state?.vendorId;
+
     const { user } = useUser();
     // const vendorId = location.state?.vendorId;
     const [pfp, setPfp] = useState(

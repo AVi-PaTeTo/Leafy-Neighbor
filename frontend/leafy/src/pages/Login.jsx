@@ -58,6 +58,7 @@ const Login = () => {
     }
 
     async function initiateSignUp(e){
+        e.preventDefault()
         const formData = new FormData()
         formData.append('username',signUpFormData.sup_username)
         formData.append('email',signUpFormData.sup_email)

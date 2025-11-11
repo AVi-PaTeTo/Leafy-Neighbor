@@ -108,7 +108,7 @@ function App() {
             <Route path="/summary/:id" element={<Summary />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/settings" element={<Settings />} />
-            <Route path="/vendor/:vendorId" element={<Vendor />} />
+            <Route path="/vendor/:businessName" element={<Vendor />} />
             <Route path="/edit/:prodId" element={<Modify />} />
           </Routes>
         </Suspense>

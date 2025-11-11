@@ -10,6 +10,12 @@ const NavLinks = (props) => {
   const navigate = useNavigate();
   const { user } = useUser();
 
+  function toVendorDashboard(){
+    const businessName = user.vendor_profile.business_name.split(" ").join("_")
+    const vendorId = user.vendor_profile.id
+    navigate(`/vendor/${businessName}`, { state: { vendorId } })
+  }
+
   const navigationLinks = links.map((link) => {
     if (link === "Categories") {
       return (
@@ -48,7 +54,7 @@ const NavLinks = (props) => {
           <div
             className="pb-2 group"
             key={link}
-            onClick={() => navigate(`/vendor/${user.vendor_profile.id}`)}
+            onClick={toVendorDashboard}
           >
             <li className="transition-transform  duration-100 ease-in-out group-hover:-translate-y-1 group-hover:cursor-pointer group-hover:mb-4  group-hover:border-b-2 border-b-primary">
               {link}

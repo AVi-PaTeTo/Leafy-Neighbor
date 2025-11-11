@@ -45,6 +45,10 @@ const Settings = () =>{
                                                             confirm_pass:''
                                                         })
 
+    const [vendorFormData, setVendrFormData] = useState({   vpfp: "",
+                                                            business_name: "",
+                                                            location: "" })                                                    
+
     const [addrTypeDropdown, setAddrTypeDropdown] = useState(false)
 
     const [tempNewDefAddr,setTempNewDefAddr] = useState(null)
@@ -53,6 +57,7 @@ const Settings = () =>{
     const [newAddrPopup, setNewAddrPopup] = useState(false)
     const [changePassPop, setChangePassPop] = useState(false)
     const [passError, setPassError] = useState('')
+    const [vendorPopup,setVendorPopup] = useState(false)
     const [show, setShow] = useState(false)
     const [toastMessage, setToastMessage] = useState("")                                                    
 
@@ -113,6 +118,10 @@ const Settings = () =>{
         setUserData(prev => ({...prev, [e.target.name]:e.target.value}))
     }
 
+
+    const handleVendorFormDataChange = (e) => {
+        setVendrFormData(prev => ({...prev, [e.target.name]:e.target.value}))
+    }
 
     const handleNewAddrDataChange = (e) => {
         if (e.target.id != 'is_default'){
@@ -243,14 +252,28 @@ const Settings = () =>{
         }
     }
 
-    const vendorButton = async () =>{
-        if(!userData.is_vendor){
-
-            const response = await becomeVendor(userData.id)
+    const registerVendor = async () => {
+            for (let key in vendorFormData) {
+                if (vendorFormData[key] === ""){
+                    updateToast("Please fill all the data.")
+                    return
+                }
+            }
+            const response = await becomeVendor(userData.id, vendorFormData)
             setUser(prev => ({...prev,is_vendor:true, vendor_profile:response.data.vendor_profile}))
-            navigate(`/vendor/${response.data.vendor_profile.id}`)
+            const vendorId = response.data.vendor_profile.id
+            const businessName = response.data.vendor_profile.business_name.split(" ").join("_")
+            navigate(`/vendor/${businessName}`, { state: { vendorId } });
+    }
+
+
+    const vendorButton = () =>{
+        if(!userData.is_vendor){
+            setVendorPopup(true)
         } else {
-            navigate(`/vendor/${userData.vendor_profile.id}`)
+            const vendorId = userData.vendor_profile.id
+            const businessName = userData.vendor_profile.business_name? userData.vendor_profile.business_name.split(" ").join("_") : "Default_business_name"
+            navigate(`/vendor/${businessName}`, { state: { vendorId } });
         }
     }
     
@@ -273,6 +296,29 @@ const Settings = () =>{
                         </div>
                     </div>
                 </div>}
+            
+            {vendorPopup && 
+                <div className="fixed flex justify-center items-center h-full w-full bg-black/50 z-20 py-25 px-2">
+                    <div className="relative flex flex-col w-full max-w-[600px] h-full max-h-fit py-8 px-4 sm:px-8 gap-4 bg-zinc-100 rounded-xl overflow-hidden">
+                        <div className="absolute h-10 w-10 top-2 right-3 flex justify-center">
+                            <svg onClick={() => setPfpPopup(false)} className="fill-black w-8 h-8 shrink-0 hover:cursor-pointer" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" ><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg> 
+                        </div>
+                        <div className="flex flex-col ">
+                            <label className="font-semibold mb-2" htmlFor="vpfp">Business Image</label>
+                            <input className="py-1 px-3 outline-1 outline-zinc-400 rounded-sm" name="vpfp" value={vendorFormData['vpfp']} onChange={(e)=> handleVendorFormDataChange(e)} placeholder="" type="text" />
+                        </div>
+                        <div className="flex flex-col ">
+                            <label className="font-semibold mb-2" htmlFor="business_name">Business Name</label>
+                            <input className="py-1 px-3 outline-1 outline-zinc-400 rounded-sm" name="business_name" value={vendorFormData['business_name']} onChange={(e)=> handleVendorFormDataChange(e)} placeholder="" type="text" />
+                        </div>
+                        <div className="flex flex-col">
+                            <label className="font-semibold mb-2" htmlFor="location">Location (Google Maps Link)</label>
+                            <input className="py-1 px-3 outline-1 outline-zinc-400 rounded-sm" name="location" value={vendorFormData['location']} onChange={(e)=> handleVendorFormDataChange(e)} placeholder="" type="text" />
+                        </div>
+                        <button onClick={registerVendor} className="px-2 py-1 bg-primary self-end rounded-md w-fit">Sign Up</button>
+                    </div>
+                </div>}
+
             {changePassPop && 
                 <div className="fixed flex justify-center items-center h-full w-full bg-black/50 z-20 py-25 px-2">
                     <div className="relative flex flex-col w-full max-w-[600px] h-full max-h-fit py-8 px-4 sm:px-8 gap-4 bg-zinc-100 rounded-xl overflow-hidden">

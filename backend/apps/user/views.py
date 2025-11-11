@@ -33,7 +33,11 @@ class UserViewSet(viewsets.ModelViewSet):
         user.save()
 
         vendor_profile, created = VendorProfile.objects.get_or_create(user=user)
-
+        
+        vendor_profile.vpfp = request.data.get("vpfp")
+        vendor_profile.business_name = request.data.get("business_name")
+        vendor_profile.location = request.data.get("location")
+        vendor_profile.save()
         # Serialize the profile as desired
         serializer = VendorProfileSerializer(vendor_profile)
         return Response({
