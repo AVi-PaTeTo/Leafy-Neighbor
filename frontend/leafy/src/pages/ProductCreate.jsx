@@ -3,15 +3,15 @@ import AutoGrowingTextarea from "../components/TextArea"
 import ImageUploader from "../components/ImageUploader";
 import { createProduct, getProductById, getProducts, getCategories, getTags } from "../api/ApiFunctions";
 import Toast from "../components/Toast";
-
-
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
     const PLANT_CARE_ID = 6;
+    const navigate = useNavigate();
+
 
     const [categories, setCategories] = useState([])
     const [tags, setTags] = useState([])
-
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedTags, setSelectedTags] = useState({})
     const [showUploader, setShowUploader] = useState(false);
@@ -140,7 +140,6 @@ const Create = () => {
         for (const category of selectedCategories) {
             formData.append('categories', category)
         }
-        // formData.append('categories', selectedCategories.join(','))
 
         const allTagIds = Object.values(selectedTags).flatMap(value => {
             if (value instanceof Set) {
@@ -157,7 +156,6 @@ const Create = () => {
             formData.append('tags', tag)
         }
 
-
         // Append description as JSON string if backend expects a single value
         formData.append('description', JSON.stringify(description));
 
@@ -169,12 +167,17 @@ const Create = () => {
 
         try {
             const response = await createProduct(formData);
-            console.log(response.data.id)
+            const id = response.data.id
+            const prodName = response.data.title 
 
             if (response.status >=200 && response.status < 300) {
                     updateToast('Product uploaded successfully.');
+                    setTimeout(() => {
+                    navigate(`/browse/${prodName}}`, { state: { id } });
+                }, 3000);
                 }
             } catch (error) {
+                console.log(error)
                 updateToast('Something went wrong.');
         }
         };

@@ -164,7 +164,7 @@ export const becomeVendor = async(id) => {
 }
 
 export const getVendorProfile = async(id) => {
-    const response = await API.get(`/vendors/${id}`)
+    const response = await API.get(`/vendors/${id}/`)
     return response
 }
 

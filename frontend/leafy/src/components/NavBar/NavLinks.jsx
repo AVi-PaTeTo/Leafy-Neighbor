@@ -42,9 +42,8 @@ const NavLinks = (props) => {
         </div>
       );
     } else if (link === "Vendor") {
-      if (user != null && !user.is_vendor) {
-        return;
-      } else {
+      if (!user) return null;
+      if (!user.is_vendor) return null;
         return (
           <div
             className="pb-2 group"
@@ -56,7 +55,6 @@ const NavLinks = (props) => {
             </li>
           </div>
         );
-      }
     } else {
       return (
         <Link

@@ -21,7 +21,7 @@ class UserViewSet(viewsets.ModelViewSet):
             return User.objects.all()
         return User.objects.filter(id=user.id)
 
-    # @extend_schema(request=MakeVendorSerializer)
+    @extend_schema(request=MakeVendorSerializer)
     @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def make_vendor(self, request, pk=None):
         user = self.get_object()
