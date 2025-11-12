@@ -24,7 +24,6 @@ const Login = () => {
 
         try {
         const response = await login(json);
-        console.log(response)
         const { access, refresh } = response.data;
 
         // Save tokens in localStorage
