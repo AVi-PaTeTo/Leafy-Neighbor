@@ -11,7 +11,7 @@ const NavLinks = (props) => {
   const { user } = useUser();
 
   function toVendorDashboard(){
-    const businessName = user.vendor_profile.business_name.split(" ").join("_")
+    const businessName = userData.vendor_profile.business_name? userData.vendor_profile.business_name.split(" ").join("_") : "Default_business_name"
     const vendorId = user.vendor_profile.id
     navigate(`/vendor/${businessName}`, { state: { vendorId } })
   }

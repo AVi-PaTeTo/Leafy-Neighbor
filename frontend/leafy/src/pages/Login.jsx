@@ -24,7 +24,7 @@ const Login = () => {
 
         try {
         const response = await login(json);
-        
+        console.log(response)
         const { access, refresh } = response.data;
 
         // Save tokens in localStorage
@@ -41,7 +41,8 @@ const Login = () => {
         console.log('Login successful!');
         navigate('/');
         } catch (err) {
-        setError(err.response?.data?.detail || 'Invalid credentials. Try again.');
+            const message = err.response.data.detail
+            setError(message);
         } finally {
         setLoading(false);
         }
@@ -84,12 +85,12 @@ const Login = () => {
                     <div className="w-full h-full flex">
 
                         {/* sign in form */}
-                        <form onSubmit={handleLogin} className={`flex flex-col items-center justify-center pt-10 pb-4 px-10 sm:py-16 sm:pb-10 sm:px-30 h-full w-full shrink-0 transition-transform duration-700 ease-in-out ${!signUpFormVisible?'translate-x-0':'-translate-x-[100%] pointer-events-none'}`} action="">
+                        <form onSubmit={handleLogin} className={`relative flex flex-col items-center justify-center pt-10 pb-4 px-10 sm:py-16 sm:pb-10 sm:px-30 h-full w-full shrink-0 transition-transform duration-700 ease-in-out ${!signUpFormVisible?'translate-x-0':'-translate-x-[100%] pointer-events-none'}`} action="">
                             <div className="flex flex-col w-full items-center justify-center pb-8">
                                 <h2 className="font-bold text-[2rem] text-center tracking-tight pb-2">Hello again, Neighbour!</h2>
                                 <p className="text-center tracking-wide">Let’s get you back to growing your perfect space.</p>
                             </div>
-
+                            {error && <p className="text-red-500">{error}</p>}
                             <div className="flex flex-col w-full">
                                 <div className="flex flex-col w-full group">
                                     <label className={`${loginFormData['email'] === ''? 'translate-y-8': 'translate-y-0'} translate-x-2 transition-transform duration-500 ease-in-out group-focus-within:translate-y-0`} htmlFor="email">Email</label>

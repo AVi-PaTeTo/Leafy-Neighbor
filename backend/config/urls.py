@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+from apps.cust_token.views import CustomTokenObtainPairView
 from apps.user.views import UserViewSet, VendorProfileViewSet
 from apps.product.views import ProductViewSet, ProdImageViewSet, DummyIMGViewSet
 from apps.address.views import AddressViewSet
@@ -51,7 +52,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
 
     #token authentication
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     #documentation
