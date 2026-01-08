@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { getCategories } from "../../api/ApiFunctions";
+import { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 

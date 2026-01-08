@@ -3,8 +3,7 @@ import './App.css'
 import Navbar from './components/NavBar/Navbar'
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { UserProvider } from './context/UserContext'
-import { useUser } from './context/UserContext';
-import { getUser } from './api/ApiFunctions';
+
 
 // Lazy loaded components
 const LandingPage = lazy(() => import('./pages/LandingPage'));

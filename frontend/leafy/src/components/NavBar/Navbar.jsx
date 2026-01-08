@@ -7,7 +7,36 @@ import { getCategories} from "../../api/ApiFunctions"
 
 const Navbar = (props) => {
     const [sidebar, setSidebar] = useState(false)
-    const [categories,setCategories] = useState([])
+    const [categories,setCategories] = useState([
+                                                    {
+                                                        "id": 1,
+                                                        "name": "Indoor Plants"
+                                                    },
+                                                    {
+                                                        "id": 2,
+                                                        "name": "Outdoor Plants"
+                                                    },
+                                                    {
+                                                        "id": 3,
+                                                        "name": "Succulent & Cacti"
+                                                    },
+                                                    {
+                                                        "id": 4,
+                                                        "name": "Flowering Plants"
+                                                    },
+                                                    {
+                                                        "id": 5,
+                                                        "name": "Herbs"
+                                                    },
+                                                    {
+                                                        "id": 6,
+                                                        "name": "Hanging Plants"
+                                                    },
+                                                    {
+                                                        "id": 7,
+                                                        "name": "Plant Care"
+                                                    }
+                                                ])
 
     useEffect(() => {        
                 const fetchCategories =async() =>{

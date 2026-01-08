@@ -38,3 +38,4 @@ silk.sqlite
 
 # Misc
 *.dump
+backend/util/seed_data.py

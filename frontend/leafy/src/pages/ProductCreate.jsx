@@ -1,12 +1,12 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import AutoGrowingTextarea from "../components/TextArea"
 import ImageUploader from "../components/ImageUploader";
-import { createProduct, getProductById, getProducts, getCategories, getTags } from "../api/ApiFunctions";
+import { createProduct, getCategories, getTags } from "../api/ApiFunctions";
 import Toast from "../components/Toast";
 import { useNavigate } from "react-router-dom";
 
 const Create = () => {
-    const PLANT_CARE_ID = 6;
+    const PLANT_CARE_ID = 7;
     const navigate = useNavigate();
 
 

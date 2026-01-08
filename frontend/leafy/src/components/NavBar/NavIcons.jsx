@@ -7,7 +7,7 @@ import { useUser } from "../../context/UserContext";
 const NavIcons = (props) => {
   const navigate = useNavigate()
   const { user } = useUser()
-  const [icons, setIcons] = useState(iconsData);
+  const icons= useState(iconsData);
   const [userMenu, setUserMenu] = useState(false)
 
   function logButton(){
