@@ -31,7 +31,7 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const noNavbarPaths = ['/user'];
+  const noNavbarPaths = ['/auth'];
   const hideNavbar = noNavbarPaths.includes(location.pathname);
 
   useEffect(() => {

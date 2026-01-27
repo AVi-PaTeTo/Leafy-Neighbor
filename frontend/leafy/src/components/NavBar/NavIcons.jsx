@@ -7,7 +7,7 @@ import { useUser } from "../../context/UserContext";
 const NavIcons = (props) => {
   const navigate = useNavigate()
   const { user } = useUser()
-  const icons= useState(iconsData);
+  const [icons] = useState(iconsData);
   const [userMenu, setUserMenu] = useState(false)
 
   function logButton(){
@@ -32,12 +32,12 @@ const NavIcons = (props) => {
     )
       } else if (icon.name === 'user') { return (
         <p className="hidden md:block group hover:cursor-pointer" to={'settings'} key={icon.id} onClick={()=>setUserMenu(prev => !prev)}  onMouseOver={()=>setUserMenu(true)} onMouseLeave={()=>setUserMenu(false)}> 
-        <li 
-          id={icon.id}
-        >
-          {icon.svg}
-        </li>
-      </p>
+          <li 
+            id={icon.id}
+          >
+            {icon.svg}
+          </li>
+        </p>
       )
       } else { return(
       <Link className="hidden md:block " to={icon.name} key={icon.id}>
